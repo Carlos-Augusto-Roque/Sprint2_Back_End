@@ -459,11 +459,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Carlos\\Desktop\\Senai\\Sprint2_Back_End\\Sprint2_Back_End\\Filmes\\senai_filmes_webApi\\senai_filmes_webApi.csproj",
+      "projectUniqueName": "C:\\Users\\Carlos\\Desktop\\Senai\\Sprint2_Back_End\\Filmes\\senai_filmes_webApi\\senai_filmes_webApi.csproj",
       "projectName": "senai_filmes_webApi",
-      "projectPath": "C:\\Users\\Carlos\\Desktop\\Senai\\Sprint2_Back_End\\Sprint2_Back_End\\Filmes\\senai_filmes_webApi\\senai_filmes_webApi.csproj",
+      "projectPath": "C:\\Users\\Carlos\\Desktop\\Senai\\Sprint2_Back_End\\Filmes\\senai_filmes_webApi\\senai_filmes_webApi.csproj",
       "packagesPath": "C:\\Users\\Carlos\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Carlos\\Desktop\\Senai\\Sprint2_Back_End\\Sprint2_Back_End\\Filmes\\senai_filmes_webApi\\obj\\",
+      "outputPath": "C:\\Users\\Carlos\\Desktop\\Senai\\Sprint2_Back_End\\Filmes\\senai_filmes_webApi\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Carlos\\AppData\\Roaming\\NuGet\\NuGet.Config",

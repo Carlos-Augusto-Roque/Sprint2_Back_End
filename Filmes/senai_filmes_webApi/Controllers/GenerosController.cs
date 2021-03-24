@@ -52,7 +52,114 @@ namespace senai_filmes_webApi.Controllers
             //retorna o status code 200(OK) com a lista dos generos
             return Ok(listaGeneros);
         }
-        
+
+        /// <summary>
+        /// busca um genero atraves do seu id
+        /// </summary>
+        /// <param name="id">id do genero que sera buscado</param>
+        /// <returns>um genero buscado ou notfound caso nenhum genero seja encontrado</returns>
+        /// http://localhost:5000/api/generos/1 por exemplo
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
+        {
+            //cria um objeto generoBuscado que irá receber o genero buscado no bd
+            GeneroDomain generoBuscado = _generoRepository.BuscarPorId(id);
+
+            if (generoBuscado == null)
+            {
+                //caso nao seja encontrado, retorna um statusCode 404 - NotFound com a mensagem personalizada
+                return NotFound("Nenhum gênero foi encontrado");
+            }
+
+            //caso seja encontrado, retorna o genero buscado com um statusCode 200 Ok
+            return Ok(generoBuscado);
+        }
+
+        /// <summary>
+        /// Atualiza um gênero existente passando o seu id pelo corpo da requisição
+        /// </summary>
+        /// <param name="id">id do gênero que será atualizado</param>
+        /// <param name="generoAtualizado">Objeto generoAtualizado com as novas informações</param>
+        /// <returns>Um status code</returns>
+        /// http://localhost:5000/api/generos/3
+        [HttpPut("{id}")]
+        public IActionResult PutIdUrl(int id, GeneroDomain generoAtualizado)
+        {
+            // Cria um objeto generoBuscado que irá receber o gênero buscado no banco de dados
+            GeneroDomain generoBuscado = _generoRepository.BuscarPorId(id);
+
+            // Caso não seja encontrado, retorna NotFound com uma mensagem personalizada
+            // e um bool para apresentar que houve erro
+            if (generoBuscado == null)
+            {
+                return NotFound
+                    (new
+                    {
+                        mensagem = "Gênero não encontrado!",
+                        erro = true
+                    }
+                    );
+            }
+
+            // Tenta atualizar o registro
+            try
+            {
+                // Faz a chamada para o método .AtualizarIdUrl()
+                _generoRepository.AtualizarIdUrl(id, generoAtualizado);
+
+                // Retorna um status code 204 - No Content
+                return NoContent();
+            }
+            // Caso ocorra algum erro
+            catch (Exception erro)
+            {
+                // Retorna um status 400 - BadRequest e o código do erro
+                return BadRequest(erro);
+            }
+        }
+
+        /// <summary>
+        /// Atualiza um gênero existente passando o seu id pelo corpo da requisição
+        /// </summary>
+        /// <param name="generoAtualizado">Objeto generoAtualizado com as novas informações</param>
+        /// <returns>Um status code</returns>
+        [HttpPut]
+        public IActionResult PutIdBody(GeneroDomain generoAtualizado)
+        {
+            // Cria um objeto generoBuscado que irá receber o gênero buscado no banco de dados
+            GeneroDomain generoBuscado = _generoRepository.BuscarPorId(generoAtualizado.idGenero);
+
+            // Verifica se algum gênero foi encontrado
+            // ! -> negação (não)
+            if (generoBuscado != null)
+            {
+                // Se sim, tenta atualizar o registro
+                try
+                {
+                    // Faz a chamada para o método .AtualizarIdCorpo()
+                    _generoRepository.AtualizarIdCorpo(generoAtualizado);
+
+                    // Retorna um status code 204 - No Content
+                    return NoContent();
+                }
+                // Caso ocorra algum erro
+                catch (Exception erro)
+                {
+                    // Retorna um BadRequest e o código do erro
+                    return BadRequest(erro);
+                }
+            }
+
+            // Caso não seja encontrado, retorna NotFoun com uma mensagem personalizada
+            return NotFound
+                (
+                    new
+                    {
+                        mensagem = "Gênero não encontrado!"
+                    }
+                );
+        }
+
         /// <summary>
         /// Cadastra um novo gênero
         /// </summary>
