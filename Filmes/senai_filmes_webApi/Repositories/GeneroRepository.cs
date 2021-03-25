@@ -66,6 +66,23 @@ namespace senai_filmes_webApi.Repositories
 
                         //adiciona o objeto genero a lista  listaGeneros
                         listaGeneros.Add(genero);
+                    }//executa a query e armazena os dados no rdr
+                    rdr = cmd.ExecuteReader();
+
+                    //enquanto houver registros para serem lidos no rdr, o laco se repete
+                    while (rdr.Read())
+                    {
+                        //instacia um objeto genero do tipo generoDomain
+                        GeneroDomain genero = new GeneroDomain()
+                        {
+                            //atribui á propriedade IdGenero o valor da primeira coluna da tabela do bd
+                            idGenero = Convert.ToInt32(rdr[0]),
+                            //atribui á propriedade nome o valor da segunda coluna da tabela do bd
+                            nome = rdr[1].ToString()
+                        };
+
+                        //adiciona o objeto genero a lista  listaGeneros
+                        listaGeneros.Add(genero);
                     }
                 }
             }
