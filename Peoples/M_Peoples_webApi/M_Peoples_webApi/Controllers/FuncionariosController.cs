@@ -30,7 +30,7 @@ namespace M_Peoples_webApi.Controllers
         }
 
         //lista todos os funcionarios
-        [HttpGet]
+        //[HttpGet]
         public IActionResult Get()
         {
             //criado uma lista "listaFuncionarios" para receber os dados
@@ -41,7 +41,7 @@ namespace M_Peoples_webApi.Controllers
         }
 
         //busca um funcionario pelo id
-        [HttpGet("{id}")]
+        //[HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
             //criado um objeto "funcionario" que ira receber os dados
@@ -55,6 +55,41 @@ namespace M_Peoples_webApi.Controllers
             }
             //se nao, retorna um status code 404 notfound e a msg
             return NotFound("Funcionário não encontrado !");
+        }
+
+        //busca um funcionario pelo nome
+        //[HttpGet("{nome}")]
+        public IActionResult GetByName(string nome)
+        {
+            //criado um objeto "funcionario" que ira receber os dados
+            FuncionarioDomain funcionario = _funcionarioRepository.BuscarPorNome(nome);
+
+            //se existir um funcionario
+            if (funcionario != null)
+            {
+                //retorna um status code 200 Ok 
+                return Ok(funcionario);
+            }
+            //se nao, retorna um status code 404 notfound e a msg
+            return NotFound("Funcionário não encontrado !");
+        }
+
+        //mostra o nome completo de um funcionario (buscado pelo seu id)
+        [HttpGet("{id}")]
+        public IActionResult NomesCompletos(int id)
+        {
+            //criado um objeto "funcionario" que ira receber os dados
+            FuncionarioDomain funcionario = _funcionarioRepository.NomesCompletos(id);
+
+            //se existir um funcionario
+            if (funcionario != null)
+            {
+                //retorna um status code 200 Ok 
+                return Ok(funcionario);
+            }
+            //se nao, retorna um status code 404 notfound e a msg
+            return NotFound("Funcionário não encontrado !");
+
         }
 
         //deleta um funcionario pelo id

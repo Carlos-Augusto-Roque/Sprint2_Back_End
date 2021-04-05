@@ -15,6 +15,12 @@ namespace M_Peoples_webApi.Interfaces
         //buscar por id
         FuncionarioDomain BuscarPorId(int id);
 
+        //buscar por nome
+        FuncionarioDomain BuscarPorNome(string nome);
+
+        //mostrar nome completo buscando por id
+        FuncionarioDomain NomesCompletos(int id);
+
         //deletar
         void Deletar(int id);
 

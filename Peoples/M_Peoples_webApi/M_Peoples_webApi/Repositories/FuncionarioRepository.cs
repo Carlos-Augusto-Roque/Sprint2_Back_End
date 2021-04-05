@@ -115,6 +115,108 @@ namespace M_Peoples_webApi.Repositories
             }
         }
 
+
+        //metodo para buscar um funcionario pelo seu nome
+        public FuncionarioDomain BuscarPorNome(string nome)
+        {
+            //propiedade que vai assegurar que o bd se desconecte ao encerrar a aplicação
+            using (SqlConnection con = new SqlConnection(stringConexao))
+            {
+                //declarado a instrução a ser executada
+                string querySelectByName = "SELECT * FROM Funcionarios WHERE Nome = @nome";
+
+                //conecta o bd
+                con.Open();
+
+                //declara o SqlDataReader rdr para percorrer a tabela de dados
+                SqlDataReader rdr;
+
+                //declara o SqlCommand cmd passando a query que sera executa e a conexao como parametros
+                using (SqlCommand cmd = new SqlCommand(querySelectByName, con))
+                {
+                    //passa o valor para o parametro @idFuncionario
+                    cmd.Parameters.AddWithValue("@nome", nome);
+
+                    //executa a query e armazena os dados no rdr
+                    rdr = cmd.ExecuteReader();
+
+                    //verifica se o resultado da query retornou algum registro
+                    if (rdr.Read())
+                    {
+                        //se sim,
+                        //instancia um novo objeto funcionario do tipo FuncionarioDomain
+                        FuncionarioDomain funcionario = new FuncionarioDomain
+                        {
+                            //atribui á propriedade idGenero o valor da coluna idGenero da tabela do bd
+                            idFuncionario = Convert.ToInt32(rdr["IdFuncionario"]),
+                            //atribui á propriedade Nome o valor da coluna Nome da tabela do bd
+                            nome = rdr["Nome"].ToString(),
+                            //atribui á propriedade Nome o valor da coluna Sobrenome da tabela do bd
+                            sobrenome = rdr["Sobrenome"].ToString(),
+                            //atribui á propriedade Nome o valor da coluna DataNascimento da tabela do bd
+                            dataNascimento = rdr["DataNascimento"].ToString(),
+
+                        };
+
+                        //retorna o funcionario com os dados obtidos
+                        return funcionario;
+                    }
+
+                    //se não,
+                    //retorna null
+                    return null;
+                }
+            }
+        }         
+
+        //metodo para mostrar somente o nome completo do funcionario (buscado pelo id)
+        public FuncionarioDomain NomesCompletos(int id)
+        {
+            //propiedade que vai assegurar que o bd se desconecte ao encerrar a aplicação
+            using (SqlConnection con = new SqlConnection(stringConexao))
+            {
+                //declarado a instrução a ser executada
+                string querySelect = "SELECT Nome, Sobrenome FROM Funcionarios WHERE Funcionarios.IdFuncionario = @idFuncionario";
+
+                //conecta o bd
+                con.Open();
+
+                //declara o SqlDataReader rdr para percorrer a tabela de dados
+                SqlDataReader rdr;
+
+                //declara o SqlCommand cmd passando a query que sera executa e a conexao como parametros
+                using (SqlCommand cmd = new SqlCommand(querySelect, con))
+                {
+                    //passa o valor para o parametro @idFuncionario
+                    cmd.Parameters.AddWithValue("@idfuncionario", id);
+
+                    //executa a query e armazena os dados no rdr
+                    rdr = cmd.ExecuteReader();
+
+                    //verifica se o resultado da query retornou algum registro
+                    if (rdr.Read())
+                    {
+                        //se sim,
+                        //instancia um novo objeto funcionario do tipo FuncionarioDomain
+                        FuncionarioDomain func = new FuncionarioDomain()
+
+                        {
+                            //atribui á propriedade Nome o valor da coluna Nome + Sobrenome
+                            nome = rdr["Nome"].ToString() + " " + rdr["Sobrenome"].ToString()
+                        };
+
+                        //retorna o nome e sobrenome do funcionario buscado
+                        return func;
+                    }
+
+                    //se não,
+                    //retorna null
+                    return null;
+                }
+            }
+        }
+
+
         //metodo para deletar um usuario pelo seu id
         public void Deletar(int id)
         {
@@ -193,6 +295,6 @@ namespace M_Peoples_webApi.Repositories
             }
         }
 
-
+        
     }
 }

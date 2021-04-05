@@ -14,5 +14,3 @@ namespace M_Peoples_webApi.Domains
         public string dataNascimento { get; set; }
     }
 }
-
-
