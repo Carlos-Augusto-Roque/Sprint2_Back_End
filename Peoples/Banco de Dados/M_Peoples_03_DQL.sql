@@ -7,3 +7,5 @@ SELECT Nome  FROM Funcionarios;
 SELECT Nome  FROM Funcionarios ORDER BY Nome ASC;
 
 SELECT Nome  FROM Funcionarios ORDER BY Nome DESC;
+
+SELECT CONCAT(Nome,' ',Sobrenome) AS Nome_Completo FROM Funcionarios;

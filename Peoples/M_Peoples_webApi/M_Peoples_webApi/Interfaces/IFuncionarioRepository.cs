@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace M_Peoples_webApi.Interfaces
 {
-    //Criar a interface correspondente que contenha as ações de: listar, buscar por id, deletar, atualizar e inserir
+    //Criar a interface correspondente que contenha as ações de: listar, buscar por id, buscar por nome, deletar, atualizar cadastrar e nomesCompletos
     interface IFuncionarioRepository
     {
         //listar
