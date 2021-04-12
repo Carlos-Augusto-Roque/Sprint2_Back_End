@@ -24,7 +24,7 @@ namespace M_Peoples_webApi.Interfaces
         //deletar
         void Deletar(int id);
 
-        //atualizar (id pela URL)
+        //atualizar (id pelo corpo)
         void Atualizar(FuncionarioDomain funcionario);
 
         //inserir um novo funcionario

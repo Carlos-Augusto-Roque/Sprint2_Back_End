@@ -1,11 +1,11 @@
 USE M_Peoples;
 
-SELECT * FROM Funcionarios;
+SELECT IdFuncionario,Nome,Sobrenome,DataNascimento  FROM Funcionarios;
 
-SELECT Nome  FROM Funcionarios;
+SELECT IdFuncionario,Nome,Sobrenome,DataNascimento FROM Funcionarios WHERE Nome = 'Catarina';
 
 SELECT Nome  FROM Funcionarios ORDER BY Nome ASC;
 
 SELECT Nome  FROM Funcionarios ORDER BY Nome DESC;
 
-SELECT CONCAT(Nome,' ',Sobrenome) AS Nome_Completo FROM Funcionarios;
+SELECT CONCAT(Nome,' ',Sobrenome) AS [Nome Completo] FROM Funcionarios;

@@ -30,7 +30,7 @@ namespace M_Peoples_webApi.Controllers
         }
 
         //lista todos os funcionarios
-        //[HttpGet]
+        [HttpGet]
         public IActionResult Get()
         {
             //criado uma lista "listaFuncionarios" para receber os dados
@@ -75,7 +75,7 @@ namespace M_Peoples_webApi.Controllers
         }
 
         //mostra o nome completo de um funcionario (buscado pelo seu id)
-        [HttpGet("{id}")]
+        //[HttpGet("{id}")]
         public IActionResult NomesCompletos(int id)
         {
             //criado um objeto "funcionario" que ira receber os dados
