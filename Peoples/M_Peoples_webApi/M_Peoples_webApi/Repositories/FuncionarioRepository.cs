@@ -257,11 +257,11 @@ namespace M_Peoples_webApi.Repositories
         }
 
 
-        //metodo para listar o nome completo dos funcionarios 
+        //metodo para mostrar o nome completo dos funcionario buscado 
         public FuncionarioDomain NomesCompletos(int id)
         {
             //criado uma lista de funcionarios onde serao armazenados os dados
-            List<FuncionarioDomain> funcionarios = new List<FuncionarioDomain>();
+            FuncionarioDomain funcionarios = new FuncionarioDomain();
 
             //propiedade que vai assegurar que o bd se desconecte ao encerrar a aplicação
             using (SqlConnection con = new SqlConnection(stringConexao))

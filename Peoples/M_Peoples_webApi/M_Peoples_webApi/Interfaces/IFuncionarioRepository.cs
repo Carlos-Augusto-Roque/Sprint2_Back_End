@@ -28,7 +28,7 @@ namespace M_Peoples_webApi.Interfaces
         //listar funcionarios que tenham o nome buscado
         List<FuncionarioDomain> BuscarPorNome(string nome);
 
-        //listar o nome completo do funcionario buscado
+        //mostrar o nome completo do funcionario buscado
         FuncionarioDomain NomesCompletos(int id);
 
         //Listar todos os funcionarios de forma ordenada ASC ou DESC pelo nome
