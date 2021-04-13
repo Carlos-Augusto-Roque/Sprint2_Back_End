@@ -11,6 +11,6 @@ namespace M_Peoples_webApi.Domains
         public int idFuncionario { get; set; }
         public string nome { get; set; }
         public string sobrenome { get; set; }
-        public string dataNascimento { get; set; }
+        public DateTime dataNascimento { get; set; }
     }
 }

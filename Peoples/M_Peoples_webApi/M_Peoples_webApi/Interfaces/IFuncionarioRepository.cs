@@ -9,25 +9,30 @@ namespace M_Peoples_webApi.Interfaces
     //Criar a interface correspondente que contenha as ações de: listar, buscar por id, buscar por nome, deletar, atualizar cadastrar e nomesCompletos
     interface IFuncionarioRepository
     {
-        //listar
+        //Create
+        void Cadastrar(FuncionarioDomain novoFuncionario);
+
+        //Read
         List<FuncionarioDomain> ListarTodos();
 
-        //buscar por id
-        FuncionarioDomain BuscarPorId(int id);
-
-        //buscar por nome
-        FuncionarioDomain BuscarPorNome(string nome);
-
-        //mostrar nome completo buscando por id
-        FuncionarioDomain NomesCompletos(int id);
-
-        //deletar
-        void Deletar(int id);
-
-        //atualizar (id pelo corpo)
+        //Update
         void Atualizar(FuncionarioDomain funcionario);
 
-        //inserir um novo funcionario
-        void Cadastrar(FuncionarioDomain novoFuncionario);
+        //Delete
+        void Deletar(int id);
+        
+        //Extras
+        //Buscar um funcionario pelo seu id
+        FuncionarioDomain BuscarPorId(int id);
+
+        //listar funcionarios que tenham o nome buscado
+        List<FuncionarioDomain> BuscarPorNome(string nome);
+
+        //listar o nome completo do funcionario buscado
+        FuncionarioDomain NomesCompletos(int id);
+
+        //Listar todos os funcionarios de forma ordenada ASC ou DESC pelo nome
+        List<FuncionarioDomain> ListarOrdenado(string ordem);
+
     }
 }

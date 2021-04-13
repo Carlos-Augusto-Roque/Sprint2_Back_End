@@ -29,19 +29,91 @@ namespace M_Peoples_webApi.Controllers
             _funcionarioRepository = new FuncionarioRepository();
         }
 
-        //lista todos os funcionarios
+        //Create
+        [HttpPost]
+        public IActionResult Post(FuncionarioDomain novoFuncionario)
+        {
+            if (novoFuncionario.nome == null)
+            {
+                return BadRequest("O campo nome é obrigatório!");
+            }
+
+            //faz a chamada para o metodo .Cadastrar
+            _funcionarioRepository.Cadastrar(novoFuncionario);
+
+            //retorna um status code 201 - created
+            return Created("http://localhost:5000/api/funcionarios", novoFuncionario);
+        }
+
+        //Read
         [HttpGet]
         public IActionResult Get()
         {
-            //criado uma lista "listaFuncionarios" para receber os dados
-            List<FuncionarioDomain> listaFuncionarios = _funcionarioRepository.ListarTodos();
-
             //retorna a lista dos funcionarios e um status code 200 (OK)
-            return Ok(listaFuncionarios);
+            return Ok(_funcionarioRepository.ListarTodos());
+        }
+
+        //Update
+        [HttpPut]
+        public IActionResult PutIdBody(FuncionarioDomain funcionarioAtualizado)
+        {
+            // Cria um objeto "funcionario" que irá receber o funcionario buscado no banco de dados
+            FuncionarioDomain funcionario = _funcionarioRepository.BuscarPorId(funcionarioAtualizado.idFuncionario);
+
+            //verifica se algum funcionario foi encontrado
+            if (funcionario != null)
+            {
+                //tenta atualizar o registro
+                try
+                {
+                    // Faz a chamada para o método .Atualizar
+                    _funcionarioRepository.Atualizar(funcionarioAtualizado);
+
+                    // Retorna um status code 204 - No Content
+                    return NoContent();
+                }
+                // Caso ocorra algum erro
+                catch (Exception erro)
+                {
+                    // Retorna um status 400 - BadRequest e o código do erro
+                    return BadRequest(erro);
+                }
+            }
+
+            // Caso não seja encontrado, retorna NotFound com uma mensagem personalizada
+            // e um bool para representar que houve erro
+            return NotFound
+                (
+                    new
+                    {
+                        mensagem = "Funcionário não encontrado",
+                        erro = true
+                    }
+                );
+        }
+
+        //Delete
+        [HttpDelete("{id}")]
+        public IActionResult Deletar(int id)
+        {
+            FuncionarioDomain funcionario = _funcionarioRepository.BuscarPorId(id);
+
+            if (funcionario != null)
+            {
+
+                //chama o metodo deletar
+                _funcionarioRepository.Deletar(id);
+
+                return Ok($"O Funcionario {id} foi excluido com sucesso!");
+
+            }
+
+            //retorna status code 204 - no content
+            return NotFound("Nenhum funcionário encontrado com esse id");
         }
 
         //busca um funcionario pelo id
-        //[HttpGet("{id}")]
+        [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
             //criado um objeto "funcionario" que ira receber os dados
@@ -57,96 +129,42 @@ namespace M_Peoples_webApi.Controllers
             return NotFound("Funcionário não encontrado !");
         }
 
-        //busca um funcionario pelo nome
-        //[HttpGet("{nome}")]
+        //Lista todos os funcionários através de uma palavra-chave
+        [HttpGet("buscar/{nome}")]
         public IActionResult GetByName(string nome)
         {
-            //criado um objeto "funcionario" que ira receber os dados
-            FuncionarioDomain funcionario = _funcionarioRepository.BuscarPorNome(nome);
-
-            //se existir um funcionario
-            if (funcionario != null)
-            {
-                //retorna um status code 200 Ok 
-                return Ok(funcionario);
-            }
-            //se nao, retorna um status code 404 notfound e a msg
-            return NotFound("Funcionário não encontrado !");
+            return Ok(_funcionarioRepository.BuscarPorNome(nome));
         }
 
-        //mostra o nome completo de um funcionario (buscado pelo seu id)
-        //[HttpGet("{id}")]
-        public IActionResult NomesCompletos(int id)
+        // Ler o nome completo do funcionário
+        [HttpGet("Ler/{id}")]
+        public IActionResult GetFullName(int id)
         {
-            //criado um objeto "funcionario" que ira receber os dados
             FuncionarioDomain funcionario = _funcionarioRepository.NomesCompletos(id);
 
-            //se existir um funcionario
             if (funcionario != null)
             {
-                //retorna um status code 200 Ok 
-                return Ok(funcionario);
-            }
-            //se nao, retorna um status code 404 notfound e a msg
-            return NotFound("Funcionário não encontrado !");
 
+            return Ok(funcionario);
+
+            }
+
+            return NotFound("Não encontrado!");
         }
 
-        //deleta um funcionario pelo id
-        [HttpDelete("{id}")]
-        public IActionResult Deletar(int id)
+        //Lista todos os funcionários de maneira ordenada pelo nome
+        [HttpGet("ordenacao/{ordem}")]
+        public IActionResult GetOrderBy(string ordem)
         {
-            //chama o metodo deletar
-             _funcionarioRepository.Deletar(id);
-
-            //retorna status code 204 - no content
-            return StatusCode(204);
-        }
-
-        //atualiza um funcionario pelo id
-        [HttpPut]
-        public IActionResult PutIdBody(FuncionarioDomain funcionarioAtualizado)
-        {
-            // Cria um objeto "funcionario" que irá receber o funcionario buscado no banco de dados
-            FuncionarioDomain funcionario = _funcionarioRepository.BuscarPorId(funcionarioAtualizado.idFuncionario);
-
-            // Caso não seja encontrado, retorna NotFound com uma mensagem personalizada
-            // e um bool para apresentar que houve erro
-            if (funcionario == null)
+            // Verifica se a ordenação atende aos requisitos
+            if (ordem != "ASC" && ordem != "DESC")
             {
-                return NotFound
-                    (new
-                    {
-                        mensagem = "Funcionário não encontrado !"
-                    }
-                    );
+                // Caso não, retorna um status code 404 - BadRequest com uma mensagem de erro
+                return BadRequest("Não é possível ordenar da maneira solicitada. Por favor, ordene por 'ASC' ou 'DESC'");
             }
-            //tenta atualizar o registro
-            try
-            {
-                // Faz a chamada para o método .Atualizar
-                _funcionarioRepository.Atualizar(funcionarioAtualizado);
 
-                // Retorna um status code 204 - No Content
-                return NoContent();
-            }
-            // Caso ocorra algum erro
-            catch (Exception erro)
-            {
-                // Retorna um status 400 - BadRequest e o código do erro
-                return BadRequest(erro);
-            }
-        }
-
-        //cadastra um novo funcionario
-        [HttpPost]
-        public IActionResult Put(FuncionarioDomain novoFuncionario)
-        {
-            //faz a chamada para o metodo .Cadastrar
-            _funcionarioRepository.Cadastrar(novoFuncionario);
-
-            //retorna um status code 201 - created
-            return StatusCode(201);
+            // Retorna a lista ordenada com um status code 200 - OK
+            return Ok(_funcionarioRepository.ListarOrdenado(ordem));
         }
 
     }
