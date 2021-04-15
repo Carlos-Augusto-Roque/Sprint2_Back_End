@@ -58,3 +58,10 @@ C:\Users\Carlos\Desktop\Senai\Sprint2_Back_End\Filmes\senai_filmes_webApi\obj\De
 C:\Users\Carlos\Desktop\Senai\Sprint2_Back_End\Filmes\senai_filmes_webApi\obj\Debug\net5.0\senai_filmes_webApi.RazorTargetAssemblyInfo.cache
 C:\Users\Carlos\Desktop\Senai\Sprint2_Back_End\Filmes\senai_filmes_webApi\obj\Debug\net5.0\senai_filmes_webApi.csproj.CopyComplete
 C:\Users\Carlos\Desktop\Senai\Sprint2_Back_End\Filmes\senai_filmes_webApi\obj\Debug\net5.0\senai_filmes_webApi.genruntimeconfig.cache
+C:\Users\Carlos\Desktop\Senai\Sprint2_Back_End\Filmes\senai_filmes_webApi\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\Carlos\Desktop\Senai\Sprint2_Back_End\Filmes\senai_filmes_webApi\bin\Debug\net5.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\Carlos\Desktop\Senai\Sprint2_Back_End\Filmes\senai_filmes_webApi\bin\Debug\net5.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\Carlos\Desktop\Senai\Sprint2_Back_End\Filmes\senai_filmes_webApi\bin\Debug\net5.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\Carlos\Desktop\Senai\Sprint2_Back_End\Filmes\senai_filmes_webApi\bin\Debug\net5.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\Carlos\Desktop\Senai\Sprint2_Back_End\Filmes\senai_filmes_webApi\bin\Debug\net5.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\Carlos\Desktop\Senai\Sprint2_Back_End\Filmes\senai_filmes_webApi\bin\Debug\net5.0\System.IdentityModel.Tokens.Jwt.dll
