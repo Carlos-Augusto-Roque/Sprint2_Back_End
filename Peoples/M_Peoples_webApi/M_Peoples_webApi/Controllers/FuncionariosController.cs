@@ -1,6 +1,7 @@
 ﻿using M_Peoples_webApi.Domains;
 using M_Peoples_webApi.Interfaces;
 using M_Peoples_webApi.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -30,6 +31,7 @@ namespace M_Peoples_webApi.Controllers
         }
 
         //Create
+        [Authorize] //Autorização para todos os tipos de usuarios logados
         [HttpPost]
         public IActionResult Post(FuncionarioDomain novoFuncionario)
         {
@@ -46,14 +48,16 @@ namespace M_Peoples_webApi.Controllers
         }
 
         //Read
+        [Authorize] //Autorização para todos os tipos de usuarios logados
         [HttpGet]
         public IActionResult Get()
         {
             //retorna a lista dos funcionarios e um status code 200 (OK)
             return Ok(_funcionarioRepository.ListarTodos());
         }
-
+        
         //Update
+        [Authorize(Roles = "Administrador")] //Autorização para o usuario do tipo 'Administrador' que esteja logado
         [HttpPut]
         public IActionResult PutIdBody(FuncionarioDomain funcionarioAtualizado)
         {
@@ -93,6 +97,7 @@ namespace M_Peoples_webApi.Controllers
         }
 
         //Delete
+        [Authorize(Roles = "Administrador")]
         [HttpDelete("{id}")]
         public IActionResult Deletar(int id)
         {
@@ -113,6 +118,7 @@ namespace M_Peoples_webApi.Controllers
         }
 
         //busca um funcionario pelo id
+        [Authorize]
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
@@ -130,6 +136,7 @@ namespace M_Peoples_webApi.Controllers
         }
 
         //Lista todos os funcionários através de uma palavra-chave
+        [Authorize]
         [HttpGet("buscar/{nome}")]
         public IActionResult GetByName(string nome)
         {
@@ -137,6 +144,7 @@ namespace M_Peoples_webApi.Controllers
         }
 
         // Ler o nome completo do funcionário
+        [Authorize(Roles = "Administrador")]
         [HttpGet("Ler/{id}")]
         public IActionResult GetFullName(int id)
         {
@@ -153,6 +161,7 @@ namespace M_Peoples_webApi.Controllers
         }
 
         //Lista todos os funcionários de maneira ordenada pelo nome
+        [Authorize(Roles = "Administrador")]
         [HttpGet("ordenacao/{ordem}")]
         public IActionResult GetOrderBy(string ordem)
         {
