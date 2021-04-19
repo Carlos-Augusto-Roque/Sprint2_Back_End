@@ -22,5 +22,9 @@ SELECT * FROM Jogos WHERE IdJogo = 4;
 
 SELECT * FROM Estudios WHERE IdEstudio = 2;
 
+SELECT Estudios.IdEstudio,Estudios.Nome,Jogos.Nome FROM Estudios
+LEFT JOIN Jogos 
+ON Estudios.IdEstudio = Jogos.IdEstudio;
+
 
 
