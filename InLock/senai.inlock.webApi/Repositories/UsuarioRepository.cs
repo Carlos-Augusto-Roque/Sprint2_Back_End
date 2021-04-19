@@ -11,6 +11,144 @@ namespace senai.inlock.webApi.Repositories
     public class UsuarioRepository : IUsuarioRepository
     {
         private string stringConexao = "Data Source=DESKTOP-84HBQ33; initial catalog= inlock_games_manha; user Id=sa; pwd=1234";
+        public void Cadastrar(UsuarioDomain usuario)
+        {
+            using (SqlConnection con = new SqlConnection(stringConexao))
+            {
+                string queryInsert = "INSERT INTO Usuarios (IdTipoUsuario,Email,Senha)" +
+                                     "VALUES (@IdTipoUsuario,@Email,@Senha)";
+
+                using (SqlCommand cmd = new SqlCommand(queryInsert, con))
+                {
+                    cmd.Parameters.AddWithValue("@IdTipoUsuario", usuario.idTipoUsuario);
+                    cmd.Parameters.AddWithValue("@Email", usuario.email);
+                    cmd.Parameters.AddWithValue("@Senha", usuario.senha);
+                    
+                    con.Open();
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public List<UsuarioDomain> Listar()
+        {
+            List<UsuarioDomain> listaUsuario = new List<UsuarioDomain>();
+
+            using (SqlConnection con = new SqlConnection(stringConexao))
+            {
+                string querySelectAll = "SELECT Usuarios.IdUsuario,Usuarios.IdTipoUsuario,Usuarios.Email,Usuarios.Senha,TiposUsuarios.Titulo FROM Usuarios INNER JOIN TiposUsuarios ON Usuarios.IdTipoUsuario = TiposUsuarios.IdTipoUsuario";
+
+                con.Open();
+
+                SqlDataReader rdr;
+
+                using (SqlCommand cmd = new SqlCommand(querySelectAll, con))
+                {
+                    rdr = cmd.ExecuteReader();
+
+                    while (rdr.Read())
+                    {
+                        UsuarioDomain usuario = new UsuarioDomain()
+                        {
+                            idUsuario = Convert.ToInt32(rdr[0]),
+                            idTipoUsuario = Convert.ToInt32(rdr[1]),
+                            email = rdr[2].ToString(),
+                            senha = rdr[3].ToString(),
+                            
+
+                            tipoUsuario = new TipoUsuarioDomain()
+                            {
+                                titulo = rdr[4].ToString()
+                            }
+                        };
+
+                        listaUsuario.Add(usuario);
+                    }
+                }
+            }
+
+            return listaUsuario;
+        }
+
+        public UsuarioDomain BuscarPorId(int id)
+        {
+            using (SqlConnection con = new SqlConnection(stringConexao))
+            {
+                string queryGetById = "SELECT Usuarios.IdUsuario,Usuarios.IdTipoUsuario,Usuarios.Email,Usuarios.Senha,TiposUsuarios.Titulo FROM Usuarios INNER JOIN TiposUsuarios ON Usuarios.IdUsuario = @IdUsuario";
+
+                con.Open();
+
+                SqlDataReader rdr;
+
+                using (SqlCommand cmd = new SqlCommand(queryGetById, con))
+                {
+                    cmd.Parameters.AddWithValue("@IdUsuario", id);
+
+                    rdr = cmd.ExecuteReader();
+
+                    if (rdr.Read())
+                    {
+                        UsuarioDomain usuario = new UsuarioDomain
+                        {
+                            idUsuario = Convert.ToInt32(rdr[0]),
+                            idTipoUsuario = Convert.ToInt32(rdr[1]),
+                            email = rdr[2].ToString(),
+                            senha = rdr[3].ToString(),
+
+
+                            tipoUsuario = new TipoUsuarioDomain()
+                            {
+                                titulo = rdr[4].ToString()
+                            }
+                        };
+
+                        return usuario;
+                    }
+                    return null;
+                }
+            }
+
+        }
+
+        public void Atualizar(UsuarioDomain usuario)
+        {
+            using (SqlConnection con = new SqlConnection(stringConexao))
+            {
+                string queryUpdate = "UPDATE  Usuarios SET IdTipoUsuario = @IdTipoUsuario,Email = @Email,Senha = @Senha WHERE IdUsuario = @IdUsuario";
+
+                using (SqlCommand cmd = new SqlCommand(queryUpdate, con))
+                {
+                    cmd.Parameters.AddWithValue("@IdUsuario", usuario.idUsuario);
+                    cmd.Parameters.AddWithValue("@IdTipoUsuario", usuario.idTipoUsuario);
+                    cmd.Parameters.AddWithValue("@Email", usuario.email);
+                    cmd.Parameters.AddWithValue("@Senha", usuario.senha);
+                    
+                    con.Open();
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void Deletar(int id)
+        {
+            using (SqlConnection con = new SqlConnection(stringConexao))
+            {
+
+                string queryDelete = "DELETE FROM Usuarios WHERE IdUsuario = @IdUsuario";
+
+                using (SqlCommand cmd = new SqlCommand(queryDelete, con))
+                {
+                    cmd.Parameters.AddWithValue("@IdUsuario", id);
+
+                    con.Open();
+
+                    cmd.ExecuteNonQuery();
+                }
+
+            }
+        }
 
         public UsuarioDomain Login(string email, string senha)
         {

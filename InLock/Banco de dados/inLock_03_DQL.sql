@@ -22,5 +22,5 @@ SELECT * FROM Jogos WHERE IdJogo = 4;
 
 SELECT * FROM Estudios WHERE IdEstudio = 2;
 
---Extra
+
 

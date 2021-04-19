@@ -40,7 +40,7 @@ namespace senai.inlock.webApi.Repositories
 
             using (SqlConnection con = new SqlConnection(stringConexao))
             {
-                string querySelectAll = "SELECT Jogos.Nome,Jogos.IdJogo,Jogos.Descricao,Jogos.DataLancamento,Jogos.Valor,Estudios.IdEstudio,Estudios.Nome From Jogos INNER JOIN Estudios ON Jogos.IdEstudio = Estudios.IdEstudio";
+                string querySelectAll = "SELECT Jogos.Nome,Jogos.IdJogo,Jogos.Descricao,Jogos.DataLancamento,Jogos.Valor,Estudios.IdEstudio,Estudios.Nome FROM Jogos INNER JOIN Estudios ON Jogos.IdEstudio = Estudios.IdEstudio";
 
                 con.Open();
 
@@ -58,7 +58,7 @@ namespace senai.inlock.webApi.Repositories
                             idJogo = Convert.ToInt32(rdr[1]),
                             descricao = rdr[2].ToString(),
                             dataLancamento = Convert.ToDateTime(rdr[3]),
-                            valor = Convert.ToInt32(rdr[4]),
+                            valor = Convert.ToDecimal(rdr[4]),
                             
                             estudio = new EstudioDomain()
                             {
@@ -73,6 +73,87 @@ namespace senai.inlock.webApi.Repositories
             }
 
             return listaJogo;
+        }
+
+        public JogoDomain BuscarPorId(int id)
+        {
+            using (SqlConnection con = new SqlConnection(stringConexao))
+            {
+                string queryGetById = "SELECT Jogos.IdJogo,Jogos.Nome,Jogos.Descricao,Jogos.DataLancamento,Jogos.Valor,Estudios.Nome FROM Jogos INNER JOIN Estudios ON Jogos.IdJogo = @IdJogo";
+
+                con.Open();
+
+                SqlDataReader rdr;
+
+                using (SqlCommand cmd = new SqlCommand(queryGetById,con))
+                {
+                    cmd.Parameters.AddWithValue("@IdJogo", id);
+
+                    rdr = cmd.ExecuteReader();
+
+                    if (rdr.Read())
+                    {
+                        JogoDomain jogo = new JogoDomain
+                        {
+                            idJogo = Convert.ToInt32(rdr[0]),
+                            nome = rdr[1].ToString(),
+                            descricao = rdr[2].ToString(),
+                            dataLancamento = Convert.ToDateTime(rdr[3]),
+                            valor = Convert.ToDecimal(rdr[4]),
+
+                            estudio = new EstudioDomain
+                            {
+                                nome = rdr[5].ToString()
+                            }
+                        };
+
+                        return jogo;
+                    }
+                    return null;
+                }
+            }
+            
+        }
+
+
+        public void Atualizar(JogoDomain jogo)
+        {
+            using (SqlConnection con = new SqlConnection(stringConexao))
+            {
+                string queryUpdate = "UPDATE  Jogos SET IdEstudio=@IdEstudio ,Nome = @Nome,Descricao = @Descricao,DataLancamento = @DataLancamento,Valor = @Valor WHERE IdJogo = @IdJogo";
+
+                using (SqlCommand cmd = new SqlCommand(queryUpdate, con))
+                {
+                    cmd.Parameters.AddWithValue("@IdEstudio", jogo.idEstudio);
+                    cmd.Parameters.AddWithValue("@Nome", jogo.nome);
+                    cmd.Parameters.AddWithValue("@Descricao", jogo.descricao);
+                    cmd.Parameters.AddWithValue("@DataLancamento", jogo.dataLancamento);
+                    cmd.Parameters.AddWithValue("@Valor", jogo.valor);
+                    cmd.Parameters.AddWithValue("@IdJogo", jogo.idJogo);
+
+                    con.Open();
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+        public void Deletar(int id)
+        {
+            using (SqlConnection con = new SqlConnection(stringConexao))
+            {
+
+            string queryDelete = "DELETE FROM Jogos WHERE IdJogo = @IdJogo";
+
+                using (SqlCommand cmd = new SqlCommand(queryDelete,con))
+                {
+                    cmd.Parameters.AddWithValue("@IdJogo", id);
+
+                    con.Open();
+
+                    cmd.ExecuteNonQuery();
+                }
+
+            }
         }
     }
 }

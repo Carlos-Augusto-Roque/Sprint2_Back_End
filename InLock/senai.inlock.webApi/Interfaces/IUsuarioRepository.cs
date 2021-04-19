@@ -8,6 +8,16 @@ namespace senai.inlock.webApi.Interfaces
 {
     interface IUsuarioRepository
     {
+        void Cadastrar(UsuarioDomain jogo);
+
+        List<UsuarioDomain> Listar();
+
+        UsuarioDomain BuscarPorId(int id);
+
+        void Deletar(int id);
+
+        void Atualizar(UsuarioDomain jogo);
+
         UsuarioDomain Login(string email, string senha);
     }
 }

@@ -24,7 +24,7 @@ namespace senai.inlock.webApi.Controllers
         }
 
         [Authorize(Roles = "2" )]
-        [HttpPost]
+        [HttpPost("Cadastrar")]
         public IActionResult Post(JogoDomain jogo)
         {
             if (jogo.nome == null)
@@ -37,8 +37,8 @@ namespace senai.inlock.webApi.Controllers
             return Ok();
         }
 
-        [Authorize]
-        [HttpGet]
+        [Authorize(Roles = "1, 2")]
+        [HttpGet("Listar")]
         public IActionResult Get()
         {
             List<JogoDomain> listaJogos = _jogoRepository.Listar();
@@ -46,5 +46,65 @@ namespace senai.inlock.webApi.Controllers
             return Ok(listaJogos);
         }
 
+        [Authorize(Roles = "1, 2")]
+        [HttpGet("Buscar/{id}")]
+        public IActionResult GetById(int id)
+        {
+            JogoDomain jogo = _jogoRepository.BuscarPorId(id);
+
+            if (jogo != null)
+            {
+                return Ok(jogo);
+            }
+
+            return NotFound("Jogo não encontrado !");
+        }
+
+        [Authorize(Roles = "2")]
+        [HttpDelete("Deletar/{id}")]
+        public IActionResult Deletar(int id)
+        {
+            JogoDomain jogo = _jogoRepository.BuscarPorId(id);
+
+            if (jogo == null)
+            {
+                return NotFound("Nenhum jogo encontrado com esse identificador !");
+            }
+
+            _jogoRepository.Deletar(id);
+
+            return Ok($"O jogo {id} foi excluido com sucesso!");
+        }
+
+        [Authorize(Roles = "2")]
+        [HttpPut("Atualizar")]
+        public IActionResult Atualizar(JogoDomain jogo)
+        {
+            JogoDomain jogoBuscado = _jogoRepository.BuscarPorId(jogo.idJogo);
+
+            if (jogoBuscado != null)
+            {
+
+                try
+                {
+                    _jogoRepository.Atualizar(jogo);
+
+                    return NoContent();
+                }
+                catch (Exception erro)
+                {
+                    return BadRequest(erro);
+                }
+            }
+            return NotFound
+                   (new
+                       {
+                           mensagem = "Jogo não encontrado !"
+                       }
+                   );
+        }
+
     }
+
+    
 }

@@ -11,5 +11,12 @@ namespace senai.inlock.webApi.Interfaces
         void Cadastrar(JogoDomain jogo);
 
         List<JogoDomain> Listar();
+
+        JogoDomain BuscarPorId(int id);
+
+        void Deletar(int id);
+
+        void Atualizar(JogoDomain jogo);
+
     }
 }

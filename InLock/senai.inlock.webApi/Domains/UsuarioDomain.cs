@@ -10,7 +10,9 @@ namespace senai.inlock.webApi.Domains
     {
         public int idUsuario { get; set; }
 
+        [Required(ErrorMessage = "Informe o id do tipo do usuario !")]
         public int idTipoUsuario { get; set; }
+        
      
         public TipoUsuarioDomain tipoUsuario { get; set; }
 

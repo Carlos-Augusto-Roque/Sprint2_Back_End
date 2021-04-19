@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Carlos\\Desktop\\Senai\\Sprint2_Back_End\\Jogos\\senai.inlock.webApi\\senai.inlock.webApi.csproj": {}
+    "C:\\Users\\Carlos\\Desktop\\Senai\\Sprint2_Back_End\\InLock\\senai.inlock.webApi\\senai.inlock.webApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Carlos\\Desktop\\Senai\\Sprint2_Back_End\\Jogos\\senai.inlock.webApi\\senai.inlock.webApi.csproj": {
+    "C:\\Users\\Carlos\\Desktop\\Senai\\Sprint2_Back_End\\InLock\\senai.inlock.webApi\\senai.inlock.webApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Carlos\\Desktop\\Senai\\Sprint2_Back_End\\Jogos\\senai.inlock.webApi\\senai.inlock.webApi.csproj",
+        "projectUniqueName": "C:\\Users\\Carlos\\Desktop\\Senai\\Sprint2_Back_End\\InLock\\senai.inlock.webApi\\senai.inlock.webApi.csproj",
         "projectName": "senai.inlock.webApi",
-        "projectPath": "C:\\Users\\Carlos\\Desktop\\Senai\\Sprint2_Back_End\\Jogos\\senai.inlock.webApi\\senai.inlock.webApi.csproj",
+        "projectPath": "C:\\Users\\Carlos\\Desktop\\Senai\\Sprint2_Back_End\\InLock\\senai.inlock.webApi\\senai.inlock.webApi.csproj",
         "packagesPath": "C:\\Users\\Carlos\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Carlos\\Desktop\\Senai\\Sprint2_Back_End\\Jogos\\senai.inlock.webApi\\obj\\",
+        "outputPath": "C:\\Users\\Carlos\\Desktop\\Senai\\Sprint2_Back_End\\InLock\\senai.inlock.webApi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Carlos\\AppData\\Roaming\\NuGet\\NuGet.Config",

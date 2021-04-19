@@ -12,5 +12,7 @@ namespace senai.inlock.webApi.Domains
 
         [Required(ErrorMessage = "Informe o tipo do usuário !")]
         public string titulo { get; set; }
+
+       
     }
 }

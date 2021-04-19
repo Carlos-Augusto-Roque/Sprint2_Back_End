@@ -22,8 +22,23 @@ namespace senai.inlock.webApi.Controllers
             _estudioRepository = new EstudioRepository();
         }
 
-        [Authorize]
-        [HttpGet]
+
+        [Authorize(Roles = "2")]
+        [HttpPost("Cadastrar")]
+        public IActionResult Post(EstudioDomain estudio)
+        {
+            if (estudio.nome == null)
+            {
+                return BadRequest("O campo nome é obrigatório !");
+            }
+
+            _estudioRepository.Cadastrar(estudio);
+
+            return Ok();
+        }
+
+        [Authorize(Roles = "1,2")]
+        [HttpGet("Listar")]
         public IActionResult Get()
         {
             List<EstudioDomain> listaEstudios = _estudioRepository.Listar();
@@ -31,5 +46,63 @@ namespace senai.inlock.webApi.Controllers
             return Ok(listaEstudios);
         }
 
+        
+        [Authorize(Roles = "1, 2")]
+        [HttpGet("Buscar/{id}")]
+        public IActionResult GetById(int id)
+        {
+            EstudioDomain estudio = _estudioRepository.BuscarPorId(id);
+
+            if (estudio != null)
+            {
+                return Ok(estudio);
+            }
+
+            return NotFound("Estudio não encontrado !");
+        }
+
+        [Authorize(Roles = "2")]
+        [HttpDelete("Deletar/{id}")]
+        public IActionResult Deletar(int id)
+        {
+            EstudioDomain estudio = _estudioRepository.BuscarPorId(id);
+
+            if (estudio == null)
+            {
+                return NotFound("Nenhum estudio encontrado com esse identificador !");
+            }
+
+            _estudioRepository.Deletar(id);
+
+            return Ok($"O estudio {id} foi excluido com sucesso!");
+        }
+
+        [Authorize(Roles = "2")]
+        [HttpPut("Atualizar")]
+        public IActionResult Atualizar(EstudioDomain estudio)
+        {
+            EstudioDomain estudioBuscado = _estudioRepository.BuscarPorId(estudio.idEstudio);
+
+            if (estudioBuscado != null)
+            {
+
+                try
+                {
+                    _estudioRepository.Atualizar(estudio);
+
+                    return NoContent();
+                }
+                catch (Exception erro)
+                {
+                    return BadRequest(erro);
+                }
+            }
+            return NotFound
+                   (new
+                   {
+                       mensagem = "Estudio não encontrado !"
+                   }
+                   );
+        }
     }
 }
