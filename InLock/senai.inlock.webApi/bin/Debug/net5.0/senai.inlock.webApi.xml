@@ -4,5 +4,85 @@
         <name>senai.inlock.webApi</name>
     </assembly>
     <members>
+        <member name="M:senai.inlock.webApi.Controllers.EstudiosController.Post(senai.inlock.webApi.Domains.EstudioDomain)">
+            <summary>
+            Cadastra um novo estúdio
+            </summary>
+        </member>
+        <member name="M:senai.inlock.webApi.Controllers.EstudiosController.Get">
+            <summary>
+            Lista todos os estúdios cadastrados
+            </summary>
+        </member>
+        <member name="M:senai.inlock.webApi.Controllers.EstudiosController.GetById(System.Int32)">
+            <summary>
+            Busca um estúdio pelo seu id
+            </summary>
+        </member>
+        <member name="M:senai.inlock.webApi.Controllers.EstudiosController.Deletar(System.Int32)">
+            <summary>
+            Deleta um estúdio pelo seu id 
+            </summary>
+        </member>
+        <member name="M:senai.inlock.webApi.Controllers.EstudiosController.Atualizar(senai.inlock.webApi.Domains.EstudioDomain)">
+            <summary>
+            Atualiza um estúdio (id no corpo da requisição)
+            </summary>
+        </member>
+        <member name="M:senai.inlock.webApi.Controllers.JogosController.Post(senai.inlock.webApi.Domains.JogoDomain)">
+            <summary>
+            Cadastra um novo jogo 
+            </summary>
+        </member>
+        <member name="M:senai.inlock.webApi.Controllers.JogosController.Get">
+            <summary>
+            Lista todos os jogos cadastrados 
+            </summary>
+        </member>
+        <member name="M:senai.inlock.webApi.Controllers.JogosController.GetById(System.Int32)">
+            <summary>
+            Busca um jogo pelo seu id 
+            </summary>
+        </member>
+        <member name="M:senai.inlock.webApi.Controllers.JogosController.Deletar(System.Int32)">
+            <summary>
+            Deleta um jogo pelo seu id 
+            </summary>
+        </member>
+        <member name="M:senai.inlock.webApi.Controllers.JogosController.Atualizar(senai.inlock.webApi.Domains.JogoDomain)">
+            <summary>
+            Atualiza um jogo (id no corpo da requisição) 
+            </summary>
+        </member>
+        <member name="M:senai.inlock.webApi.Controllers.UsuariosController.Post(senai.inlock.webApi.Domains.UsuarioDomain)">
+            <summary>
+            Cadastra um novo usuário 
+            </summary>
+        </member>
+        <member name="M:senai.inlock.webApi.Controllers.UsuariosController.Get">
+            <summary>
+            Lista todos os usuários cadastrados
+            </summary>
+        </member>
+        <member name="M:senai.inlock.webApi.Controllers.UsuariosController.GetById(System.Int32)">
+            <summary>
+            Busca um usuário pelo seu id 
+            </summary>
+        </member>
+        <member name="M:senai.inlock.webApi.Controllers.UsuariosController.Deletar(System.Int32)">
+            <summary>
+            Deleta um usuário pelo seu id 
+            </summary>
+        </member>
+        <member name="M:senai.inlock.webApi.Controllers.UsuariosController.Atualizar(senai.inlock.webApi.Domains.UsuarioDomain)">
+            <summary>
+            Atualiza um usuário (id no corpo da requisição) 
+            </summary>
+        </member>
+        <member name="M:senai.inlock.webApi.Controllers.UsuariosController.Login(senai.inlock.webApi.Domains.UsuarioDomain)">
+            <summary>
+            Realiza o login do usuário (por email e senha)
+            </summary>
+        </member>
     </members>
 </doc>

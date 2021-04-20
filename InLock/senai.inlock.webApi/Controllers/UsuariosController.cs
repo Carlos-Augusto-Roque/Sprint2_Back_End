@@ -26,6 +26,9 @@ namespace senai.inlock.webApi.Controllers
             _usuarioRepository = new UsuarioRepository();
         }
 
+        /// <summary>
+        /// Cadastra um novo usuário 
+        /// </summary>
         [Authorize(Roles = "2")]
         [HttpPost("Cadastrar")]
         public IActionResult Post(UsuarioDomain usuario)
@@ -40,6 +43,9 @@ namespace senai.inlock.webApi.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Lista todos os usuários cadastrados
+        /// </summary>
         [Authorize(Roles = "2")]
         [HttpGet("Listar")]
         public IActionResult Get()
@@ -49,6 +55,9 @@ namespace senai.inlock.webApi.Controllers
             return Ok(listaUsuarios);
         }
 
+        /// <summary>
+        /// Busca um usuário pelo seu id 
+        /// </summary>
         [Authorize(Roles = "2")]
         [HttpGet("Buscar/{id}")]
         public IActionResult GetById(int id)
@@ -63,6 +72,9 @@ namespace senai.inlock.webApi.Controllers
             return NotFound("Usuário não encontrado !");
         }
 
+        /// <summary>
+        /// Deleta um usuário pelo seu id 
+        /// </summary>
         [Authorize(Roles = "2")]
         [HttpDelete("Deletar/{id}")]
         public IActionResult Deletar(int id)
@@ -79,6 +91,9 @@ namespace senai.inlock.webApi.Controllers
             return Ok($"O Usuario {id} foi excluido com sucesso!");
         }
 
+        /// <summary>
+        /// Atualiza um usuário (id no corpo da requisição) 
+        /// </summary>
         [Authorize(Roles = "2")]
         [HttpPut("Atualizar")]
         public IActionResult Atualizar(UsuarioDomain usuario)
@@ -107,6 +122,9 @@ namespace senai.inlock.webApi.Controllers
                    );
         }
 
+        /// <summary>
+        /// Realiza o login do usuário (por email e senha)
+        /// </summary>
         [HttpPost("Login")]
         public IActionResult Login(UsuarioDomain login)
         {

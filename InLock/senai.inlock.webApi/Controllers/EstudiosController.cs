@@ -22,7 +22,9 @@ namespace senai.inlock.webApi.Controllers
             _estudioRepository = new EstudioRepository();
         }
 
-
+        /// <summary>
+        /// Cadastra um novo estúdio
+        /// </summary>
         [Authorize(Roles = "2")]
         [HttpPost("Cadastrar")]
         public IActionResult Post(EstudioDomain estudio)
@@ -37,6 +39,9 @@ namespace senai.inlock.webApi.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Lista todos os estúdios cadastrados
+        /// </summary>
         [Authorize(Roles = "1,2")]
         [HttpGet("Listar")]
         public IActionResult Get()
@@ -46,7 +51,9 @@ namespace senai.inlock.webApi.Controllers
             return Ok(listaEstudios);
         }
 
-        
+        /// <summary>
+        /// Busca um estúdio pelo seu id
+        /// </summary>
         [Authorize(Roles = "1, 2")]
         [HttpGet("Buscar/{id}")]
         public IActionResult GetById(int id)
@@ -61,6 +68,9 @@ namespace senai.inlock.webApi.Controllers
             return NotFound("Estudio não encontrado !");
         }
 
+        /// <summary>
+        /// Deleta um estúdio pelo seu id 
+        /// </summary>
         [Authorize(Roles = "2")]
         [HttpDelete("Deletar/{id}")]
         public IActionResult Deletar(int id)
@@ -77,6 +87,9 @@ namespace senai.inlock.webApi.Controllers
             return Ok($"O estudio {id} foi excluido com sucesso!");
         }
 
+        /// <summary>
+        /// Atualiza um estúdio (id no corpo da requisição)
+        /// </summary>
         [Authorize(Roles = "2")]
         [HttpPut("Atualizar")]
         public IActionResult Atualizar(EstudioDomain estudio)

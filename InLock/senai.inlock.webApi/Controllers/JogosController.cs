@@ -23,6 +23,9 @@ namespace senai.inlock.webApi.Controllers
             _jogoRepository = new JogoRepository();
         }
 
+        /// <summary>
+        /// Cadastra um novo jogo 
+        /// </summary>
         [Authorize(Roles = "2" )]
         [HttpPost("Cadastrar")]
         public IActionResult Post(JogoDomain jogo)
@@ -37,6 +40,9 @@ namespace senai.inlock.webApi.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Lista todos os jogos cadastrados 
+        /// </summary>
         [Authorize(Roles = "1, 2")]
         [HttpGet("Listar")]
         public IActionResult Get()
@@ -46,6 +52,9 @@ namespace senai.inlock.webApi.Controllers
             return Ok(listaJogos);
         }
 
+        /// <summary>
+        /// Busca um jogo pelo seu id 
+        /// </summary>
         [Authorize(Roles = "1, 2")]
         [HttpGet("Buscar/{id}")]
         public IActionResult GetById(int id)
@@ -60,6 +69,9 @@ namespace senai.inlock.webApi.Controllers
             return NotFound("Jogo não encontrado !");
         }
 
+        /// <summary>
+        /// Deleta um jogo pelo seu id 
+        /// </summary>
         [Authorize(Roles = "2")]
         [HttpDelete("Deletar/{id}")]
         public IActionResult Deletar(int id)
@@ -76,6 +88,9 @@ namespace senai.inlock.webApi.Controllers
             return Ok($"O jogo {id} foi excluido com sucesso!");
         }
 
+        /// <summary>
+        /// Atualiza um jogo (id no corpo da requisição) 
+        /// </summary>
         [Authorize(Roles = "2")]
         [HttpPut("Atualizar")]
         public IActionResult Atualizar(JogoDomain jogo)
