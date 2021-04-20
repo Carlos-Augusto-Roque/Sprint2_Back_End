@@ -12,7 +12,6 @@ namespace senai_filmes_webApi.Repositories
     {
         private string stringConexao = "Data Source=DESKTOP-84HBQ33; initial catalog=Filmes; user Id=sa; pwd=1234";
  
-
         public List<FilmeDomain> ListarTodos()
         {
             List<FilmeDomain> listaFilmes = new List<FilmeDomain>();
@@ -34,15 +33,14 @@ namespace senai_filmes_webApi.Repositories
                     FilmeDomain filme = new FilmeDomain()
                                                                    
                         {
-                            idFilme = Convert.ToInt32(rdr[0]),
-                            titulo = rdr[1].ToString(),
+                        idFilme = Convert.ToInt32(rdr[0]),
+                        titulo = rdr[1].ToString(),
 
-                            genero = new GeneroDomain()
-
+                        genero = new GeneroDomain()
                         {
                             nome = rdr[2].ToString()
                         }
-                    };
+                        };
 
                         listaFilmes.Add(filme);
                     }

@@ -43,9 +43,7 @@ namespace senai_filmes_webApi.Controllers
         /// Lista todos os generos
         /// </summary>
         /// <returns>uma lista de generos e um status code</returns>
-        /// http://localhost:5000/api/generos
-        /// qualquer usuario logado pode listar
-        [Authorize]// verifica se o usuario está logado
+        [Authorize(Roles = "Administrador,Usuario")]
         [HttpGet]
         public IActionResult Get()
         {
@@ -61,9 +59,7 @@ namespace senai_filmes_webApi.Controllers
         /// </summary>
         /// <param name="id">id do genero que sera buscado</param>
         /// <returns>um genero buscado ou notfound caso nenhum genero seja encontrado</returns>
-        /// http://localhost:5000/api/generos/1 por exemplo
-        /// [Authorize(Roles = "Administrador")] => somente o usuario "Administrador" logado poderá buscar um genero pelo id
-        [Authorize(Roles = "Administrador")] // verifica se o usuario logado é o Administrador 
+        [Authorize(Roles = "Administrador,Usuario")] 
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
@@ -86,7 +82,7 @@ namespace senai_filmes_webApi.Controllers
         /// <param name="id">id do gênero que será atualizado</param>
         /// <param name="generoAtualizado">Objeto generoAtualizado com as novas informações</param>
         /// <returns>Um status code</returns>
-        /// http://localhost:5000/api/generos/3
+        [Authorize(Roles = "Administrador")]
         [HttpPut("{id}")]
         public IActionResult PutIdUrl(int id, GeneroDomain generoAtualizado)
         {
@@ -128,6 +124,7 @@ namespace senai_filmes_webApi.Controllers
         /// </summary>
         /// <param name="generoAtualizado">Objeto generoAtualizado com as novas informações</param>
         /// <returns>Um status code</returns>
+        [Authorize(Roles = "Administrador")]
         [HttpPut]
         public IActionResult PutIdBody(GeneroDomain generoAtualizado)
         {
@@ -170,7 +167,7 @@ namespace senai_filmes_webApi.Controllers
         /// </summary>
         /// <param name="novoGenero">objeto novoGenero recebido na requisição</param>
         /// <returns>um status code 201 - created</returns>
-        /// http://localhost:5000/api/generos
+        [Authorize(Roles = "Administrador")]
         [HttpPost]
         public IActionResult Post(GeneroDomain novoGenero)
         {
@@ -186,7 +183,7 @@ namespace senai_filmes_webApi.Controllers
         /// </summary>
         /// <param name="id"> id do genero que sera deletado</param>
         /// <returns>um status code 204 - no content</returns>
-        ///http://localhost:5000/api/generos/4 por exempo excluir o genero cujo id seja 4
+        [Authorize(Roles = "Administrador")]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {

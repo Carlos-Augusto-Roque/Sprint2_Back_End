@@ -22,6 +22,8 @@ namespace senai_filmes_webApi.Domains
         [StringLength(20,MinimumLength = 4,ErrorMessage ="Campo deve conter no mínimo 4 e máximo de 20 caracteres")]
         public string senha { get; set; }
 
+        // Define que o campo é obrigatório
+        [Required(ErrorMessage ="Informe o tipo de permissão")]
         public string permissao { get; set; }
 
     }
