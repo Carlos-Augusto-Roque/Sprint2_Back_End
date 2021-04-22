@@ -1,8 +1,10 @@
 USE M_Peoples;
 
+SELECT * FROM Funcionarios;
+
 SELECT IdFuncionario,Nome,Sobrenome,DataNascimento  FROM Funcionarios;
 
-SELECT IdFuncionario,Nome,Sobrenome,DataNascimento FROM Funcionarios WHERE Nome = 'Catarina';
+SELECT IdFuncionario,Nome,Sobrenome,DataNascimento FROM Funcionarios WHERE Nome = 'Tiago';
 
 SELECT Nome  FROM Funcionarios ORDER BY Nome ASC;
 
