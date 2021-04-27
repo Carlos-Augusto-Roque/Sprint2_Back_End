@@ -1,0 +1,158 @@
+CRIAR API USANDO ENTITY FRAMEWORK DB FIRST
+
+BD
+1- CRIAR MODELAGEM DO BANCO DE DADOS
+2- CRIAR BD
+3- CRIAR TABELAS
+4- INSERIR DADOS NAS TABELAS
+5- FAZER SCRIPTS DE CONSULTAS
+
+BACK-END
+1- CRIAR PROJETO ASPNET CORE VAZIO
+2- CRIAR DIRETÓRIOS 
+	-DOMAINS
+	-INTERFACES
+	-REPOSITORIES
+	-CONTROLLERS
+
+3- CRIAR CLASSES NOS DIRETÓRIOS (EXCETO PARA DOMAINS)
+
+4- INSTALAR PACOTES DO NUGET
+	- Microsoft.AspNetCore.Authentication.JwtBearer
+	- Microsoft.AspNetCore.Mvc.NewtonsoftJson
+	- Microsoft.EntityFrameworkCore.SqlServer
+	- Microsoft.EntityFrameworkCore.SqlServer.Design
+	- Microsoft.EntityFrameworkCore.Tools
+	- Swashbuckle.AspNetCore
+	- System.IdentityModel.Tokens.Jwt
+
+5- FERRAMENTAS -> GERENCIADOR DE PACOTES DO NUGET -> CONSOLE DO GERENCIADOR DE PACOTES
+	-COMPILAR O CÓDIGO ABAIXO NO TERMINAL PARA CRIAR A STRING DE CONEXÃO,O CONTEXT E AUTOMATICAMENTE OS DOMAINS
+
+ 	Scaffold-DbContext "Data Source = NOME DO TERMINAL DO BD ; Initial Catalog = NOME DO BD; user Id=sa pwd="SENHA" Microsoft.EntityFrameworkCore.SqlServer
+	-OutputDir Domains -ContextDir Contexts -Context NOMEDOPROJETOContext
+
+6- NA PASTA STARTUP CONFIGURAR TODOS AS CONFIGURAÇÕES ABAIXO :
+	
+	public class Startup
+    {
+        // This method gets called by the runtime. Use this method to add services to the container.
+        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddControllers()
+
+            .AddNewtonsoftJson(options =>
+             {
+                 // Ignora os loopings nas consultas
+
+                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+
+                 // Ignora valores nulos ao fazer junções nas consultas
+
+                 options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+             });
+
+
+            // Register the Swagger generator, defining 1 or more Swagger documents
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "HROADS.webApi", Version = "v1" });
+
+                // Set the comments path for the Swagger JSON and UI.
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
+            });
+
+
+            //define a forma de autenticação : no caso usaremos o (JwtBearer)
+            services
+                    .AddAuthentication(options =>
+                    {
+                        options.DefaultAuthenticateScheme = "JwtBearer";
+                        options.DefaultChallengeScheme = "JwtBearer";
+                    })
+
+
+                //define os parametros de validação do token
+                .AddJwtBearer("JwtBearer", options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        //quem está emitindo
+                        ValidateIssuer = true,
+
+                        //quem está validando
+                        ValidateAudience = true,
+
+                        //define que o tempo de expiração será validado
+                        ValidateLifetime = true,
+
+                        //forma de criptografia
+                        IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes("hroads-chave-autenticacao")),
+
+                        //tempo de expiração do token
+                        ClockSkew = TimeSpan.FromMinutes(30),
+
+                        //nome do issuer, de onde está vindo
+                        ValidIssuer = "HROADS.webApi",
+
+                        //nome do audience, de onde está indo
+                        ValidAudience = "HROADS.webApi"
+                    };
+                });
+        }
+
+
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+
+            app.UseRouting();
+
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "HROADS.webApi");
+                c.RoutePrefix = string.Empty;
+            });
+
+
+            app.UseAuthentication();
+
+            
+            app.UseAuthorization();
+
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
+        }
+    }
+
+7- TRATAR OS ATRIBUTOS DE CADA DOMAIN COM DATA ANNOTATION
+
+8- DEFINIR OS MÉTODOS NAS INTERFACES
+
+9- IMPLEMENTAR OS MÉTODOS NOS REPOSITORIES
+
+10- CRIAR OS CONTROLLERS
+
+11- FAZER AS AUTENTICAÇÕES,AUTORIZAÇÕES E TRY_CATCH 
+
+12- GERAR UM TOKEN
+
+12- ENVIAR AS REQUESTS UTILIZANDO O POSTMAN  
