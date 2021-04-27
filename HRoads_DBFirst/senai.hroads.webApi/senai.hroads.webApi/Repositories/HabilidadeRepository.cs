@@ -1,4 +1,5 @@
-﻿using senai.hroads.webApi.Contexts;
+﻿using Microsoft.EntityFrameworkCore;
+using senai.hroads.webApi.Contexts;
 using senai.hroads.webApi.Domains;
 using senai.hroads.webApi.Interfaces;
 using System;
@@ -26,7 +27,9 @@ namespace senai.hroads.webApi.Repositories
 
         public List<Habilidade> Listar()
         {
-            return ctx.Habilidades.ToList();
+            return ctx.Habilidades.Include(h=> h.IdTipoHabilidadeNavigation).ToList();
+
+            //return ctx.Habilidades.Include(h => h.TiposDeHabilidade).Select(new Habilidades Nome).ToList();
         }
 
         public Habilidade BuscarPorId(int id)

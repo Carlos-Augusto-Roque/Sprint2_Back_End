@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using senai.hroads.webApi.Domains;
 using senai.hroads.webApi.Interfaces;
@@ -22,6 +23,10 @@ namespace senai.hroads.webApi.Controllers
             _tiposUsuarioRepository = new TiposUsuarioRepository();
         }
 
+        /// <summary>
+        /// Cadastra um novo tipo de usuário
+        /// <summary>
+        [Authorize(Roles = "2")]
         [HttpPost("Cadastrar")]
         public IActionResult Post(TiposUsuario novotipo)
         {
@@ -31,29 +36,66 @@ namespace senai.hroads.webApi.Controllers
             return StatusCode(201);
         }
 
+        /// <summary>
+        /// Lista todos os tipos de usuário
+        /// <summary>
         [HttpGet("Listar")]
         public IActionResult Get()
         {
             return Ok(_tiposUsuarioRepository.Listar());
         }
 
+        /// <summary>
+        /// Busca um tipo de usuário pelo seu id
+        /// <summary>
+        [Authorize(Roles = "1,2")]
         [HttpGet("Buscar/{id}")]
         public IActionResult GetById(int id)
         {
+            if (_tiposUsuarioRepository.BuscarPorId(id) == null)
+            {
+                return NotFound("Tipo de Usuário não encontrado !");
+            }
 
             return Ok(_tiposUsuarioRepository.BuscarPorId(id));
         }
 
+        /// <summary>
+        /// Atualiza um tipo de usuário pelo seu id
+        /// <summary>
+        [Authorize(Roles = "1,2")]
         [HttpPut("Atualizar/{id}")]
         public IActionResult Put(int id, TiposUsuario tipoAtualizado)
         {
+            if (_tiposUsuarioRepository.BuscarPorId(id) == null)
+            {
+                return NotFound
+                    (new
+                    {
+                        mensagem = "Tipo de usuário não encontrado !",
+                        erro = true
+                    }
+                    );
+            }
 
-            _tiposUsuarioRepository.Atualizar(id, tipoAtualizado);
+            try
+            {
+                
+                _tiposUsuarioRepository.Atualizar(id, tipoAtualizado);
 
-
-            return StatusCode(204);
+                return StatusCode(204);
+            }
+            catch (Exception erro)
+            {
+                return BadRequest(erro);
+            }
+                       
         }
 
+        /// <summary>
+        /// Deleta um tipo de usuário pelo seu id
+        /// <summary>
+        [Authorize(Roles = "1,2")]
         [HttpDelete("Deletar/{id}")]
         public IActionResult Delete(int id)
         {

@@ -4,6 +4,36 @@
         <name>senai.hroads.webApi</name>
     </assembly>
     <members>
+        <!-- Badly formed XML comment ignored for member "M:senai.hroads.webApi.Controllers.ClassController.Post(senai.hroads.webApi.Domains.Class)" -->
+        <!-- Badly formed XML comment ignored for member "M:senai.hroads.webApi.Controllers.ClassController.Get" -->
+        <!-- Badly formed XML comment ignored for member "M:senai.hroads.webApi.Controllers.ClassController.GetById(System.Int32)" -->
+        <!-- Badly formed XML comment ignored for member "M:senai.hroads.webApi.Controllers.ClassController.Put(System.Int32,senai.hroads.webApi.Domains.Class)" -->
+        <!-- Badly formed XML comment ignored for member "M:senai.hroads.webApi.Controllers.ClassController.Delete(System.Int32)" -->
+        <!-- Badly formed XML comment ignored for member "M:senai.hroads.webApi.Controllers.HabilidadeController.Post(senai.hroads.webApi.Domains.Habilidade)" -->
+        <!-- Badly formed XML comment ignored for member "M:senai.hroads.webApi.Controllers.HabilidadeController.Get" -->
+        <!-- Badly formed XML comment ignored for member "M:senai.hroads.webApi.Controllers.HabilidadeController.GetById(System.Int32)" -->
+        <!-- Badly formed XML comment ignored for member "M:senai.hroads.webApi.Controllers.HabilidadeController.Put(System.Int32,senai.hroads.webApi.Domains.Habilidade)" -->
+        <!-- Badly formed XML comment ignored for member "M:senai.hroads.webApi.Controllers.HabilidadeController.Delete(System.Int32)" -->
+        <!-- Badly formed XML comment ignored for member "M:senai.hroads.webApi.Controllers.PersonagenController.Post(senai.hroads.webApi.Domains.Personagen)" -->
+        <!-- Badly formed XML comment ignored for member "M:senai.hroads.webApi.Controllers.PersonagenController.Get" -->
+        <!-- Badly formed XML comment ignored for member "M:senai.hroads.webApi.Controllers.PersonagenController.GetById(System.Int32)" -->
+        <!-- Badly formed XML comment ignored for member "M:senai.hroads.webApi.Controllers.PersonagenController.Put(System.Int32,senai.hroads.webApi.Domains.Personagen)" -->
+        <!-- Badly formed XML comment ignored for member "M:senai.hroads.webApi.Controllers.PersonagenController.Delete(System.Int32)" -->
+        <!-- Badly formed XML comment ignored for member "M:senai.hroads.webApi.Controllers.TiposDeHabilidadeController.Post(senai.hroads.webApi.Domains.TiposDeHabilidade)" -->
+        <!-- Badly formed XML comment ignored for member "M:senai.hroads.webApi.Controllers.TiposDeHabilidadeController.Get" -->
+        <!-- Badly formed XML comment ignored for member "M:senai.hroads.webApi.Controllers.TiposDeHabilidadeController.GetById(System.Int32)" -->
+        <!-- Badly formed XML comment ignored for member "M:senai.hroads.webApi.Controllers.TiposDeHabilidadeController.Put(System.Int32,senai.hroads.webApi.Domains.TiposDeHabilidade)" -->
+        <!-- Badly formed XML comment ignored for member "M:senai.hroads.webApi.Controllers.TiposDeHabilidadeController.Delete(System.Int32)" -->
+        <!-- Badly formed XML comment ignored for member "M:senai.hroads.webApi.Controllers.TiposUsuarioController.Post(senai.hroads.webApi.Domains.TiposUsuario)" -->
+        <!-- Badly formed XML comment ignored for member "M:senai.hroads.webApi.Controllers.TiposUsuarioController.Get" -->
+        <!-- Badly formed XML comment ignored for member "M:senai.hroads.webApi.Controllers.TiposUsuarioController.GetById(System.Int32)" -->
+        <!-- Badly formed XML comment ignored for member "M:senai.hroads.webApi.Controllers.TiposUsuarioController.Put(System.Int32,senai.hroads.webApi.Domains.TiposUsuario)" -->
+        <!-- Badly formed XML comment ignored for member "M:senai.hroads.webApi.Controllers.TiposUsuarioController.Delete(System.Int32)" -->
+        <!-- Badly formed XML comment ignored for member "M:senai.hroads.webApi.Controllers.UsuarioController.Post(senai.hroads.webApi.Domains.Usuario)" -->
+        <!-- Badly formed XML comment ignored for member "M:senai.hroads.webApi.Controllers.UsuarioController.Get" -->
+        <!-- Badly formed XML comment ignored for member "M:senai.hroads.webApi.Controllers.UsuarioController.GetById(System.Int32)" -->
+        <!-- Badly formed XML comment ignored for member "M:senai.hroads.webApi.Controllers.UsuarioController.Put(System.Int32,senai.hroads.webApi.Domains.Usuario)" -->
+        <!-- Badly formed XML comment ignored for member "M:senai.hroads.webApi.Controllers.UsuarioController.Delete(System.Int32)" -->
         <member name="M:senai.hroads.webApi.Interfaces.IClassRepository.Cadastrar(senai.hroads.webApi.Domains.Class)">
             <summary>
             Cadastrar uma nova classe

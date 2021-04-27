@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using senai.hroads.webApi.Domains;
 using senai.hroads.webApi.Interfaces;
@@ -21,8 +22,12 @@ namespace senai.hroads.webApi.Controllers
         public ClassController()
         {
             _classRepository = new ClassRepository();
-        }          
-        
+        }
+
+        /// <summary>
+        /// Cadastra uma nova classe
+        /// <summary>
+        [Authorize(Roles = "2")]
         [HttpPost("Cadastrar")]
         public IActionResult Post(Class novaClasse)
         {
@@ -32,29 +37,64 @@ namespace senai.hroads.webApi.Controllers
             return StatusCode(201);
         }
 
+        /// <summary>
+        /// Lista todas as classes
+        /// <summary>
         [HttpGet("Listar")]
         public IActionResult Get()
         {
             return Ok(_classRepository.Listar());
         }
 
+        /// <summary>
+        /// Busca uma classe pelo seu id
+        /// <summary>
+        [Authorize(Roles = "1,2")]
         [HttpGet("Buscar/{id}")]
         public IActionResult GetById(int id)
         {
-            
+            if (_classRepository.BuscarPorId(id) == null)
+            {
+                return NotFound("Classe não encontrada !");
+            }
             return Ok(_classRepository.BuscarPorId(id));
         }
 
+        /// <summary>
+        /// Atualiza uma classe pelo seu id
+        /// <summary>
+        [Authorize(Roles = "1,2")]
         [HttpPut("Atualizar/{id}")]
         public IActionResult Put(int id, Class classeAtualizada)
         {
-            
-            _classRepository.Atualizar(id, classeAtualizada);
+            if (_classRepository.BuscarPorId(id) == null)
+            {
+                return NotFound
+                    (new
+                    {
+                        mensagem = "Classe não encontrada !",
+                        erro = true
+                    }
+                    );
+            }
 
-            
-            return StatusCode(204);
+            try
+            {
+                _classRepository.Atualizar(id, classeAtualizada);
+
+                return StatusCode(204);
+            }
+            catch (Exception erro)
+            {
+                return BadRequest(erro);
+            }
+      
         }
 
+        /// <summary>
+        /// Deleta uma classe pelo seu id
+        /// <summary>
+        [Authorize(Roles = "1,2")]
         [HttpDelete("Deletar/{id}")]
         public IActionResult Delete(int id)
         {

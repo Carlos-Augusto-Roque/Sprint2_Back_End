@@ -1,4 +1,5 @@
-﻿using senai.hroads.webApi.Contexts;
+﻿using Microsoft.EntityFrameworkCore;
+using senai.hroads.webApi.Contexts;
 using senai.hroads.webApi.Domains;
 using senai.hroads.webApi.Interfaces;
 using System;
@@ -20,11 +21,13 @@ namespace senai.hroads.webApi.Repositories
         public void Cadastrar(TiposUsuario tipo)
         {
             ctx.TiposUsuarios.Add(tipo);
+
+            ctx.SaveChanges();
         }
 
         public List<TiposUsuario> Listar()
         {
-            return ctx.TiposUsuarios.ToList();
+            return ctx.TiposUsuarios.Include(t => t.Usuarios).ToList();
         }
 
         public TiposUsuario BuscarPorId(int id)

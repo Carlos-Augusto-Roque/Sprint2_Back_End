@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using senai.hroads.webApi.Domains;
 using senai.hroads.webApi.Interfaces;
@@ -23,6 +24,10 @@ namespace senai.hroads.webApi.Controllers
             _personagenRepository = new PersonagenRepository();
         }
 
+        /// <summary>
+        /// Cadastra um novo personagem
+        /// <summary>
+        [Authorize(Roles = "1")]
         [HttpPost("Cadastrar")]
         public IActionResult Post(Personagen novoPersonagem)
         {
@@ -32,29 +37,65 @@ namespace senai.hroads.webApi.Controllers
             return StatusCode(201);
         }
 
+        /// <summary>
+        /// Lista todos os personagens
+        /// <summary>
+        [Authorize(Roles = "1,2")]
         [HttpGet("Listar")]
         public IActionResult Get()
         {
             return Ok(_personagenRepository.Listar());
         }
 
+        /// <summary>
+        /// Busca um personagem pelo seu id
+        /// <summary>
+        [Authorize(Roles = "1,2")]
         [HttpGet("Buscar/{id}")]
         public IActionResult GetById(int id)
         {
-
+            if (_personagenRepository.BuscarPorId(id) == null)
+            {
+                return NotFound("Personagem não encontrado !");
+            }
             return Ok(_personagenRepository.BuscarPorId(id));
         }
 
+        /// <summary>
+        /// Atualiza um personagem pelo seu id
+        /// <summary>
+        [Authorize(Roles = "1,2")]
         [HttpPut("Atualizar/{id}")]
         public IActionResult Put(int id, Personagen personagemAtualizado)
         {
+            if (_personagenRepository.BuscarPorId(id) == null)
+            {
+                return NotFound
+                    (new
+                    {
+                        mensagem = "Personagem não encontrado !",
+                        erro = true
+                    }
+                    );
+            }
 
-            _personagenRepository.Atualizar(id, personagemAtualizado);
+            try
+            {
+                _personagenRepository.Atualizar(id, personagemAtualizado);
+                
+                return StatusCode(204);
+            }
+            catch (Exception erro)
+            {
+                return BadRequest(erro);
+            }
 
-
-            return StatusCode(204);
         }
 
+        /// <summary>
+        /// Deleta um personagem pelo seu id
+        /// <summary>
+        [Authorize(Roles = "1,2")]
         [HttpDelete("Deletar/{id}")]
         public IActionResult Delete(int id)
         {

@@ -1,4 +1,5 @@
-﻿using senai.hroads.webApi.Contexts;
+﻿using Microsoft.EntityFrameworkCore;
+using senai.hroads.webApi.Contexts;
 using senai.hroads.webApi.Domains;
 using senai.hroads.webApi.Interfaces;
 using System;
@@ -25,7 +26,7 @@ namespace senai.hroads.webApi.Repositories
 
         public List<Class> Listar()
         {
-            return ctx.Classes.ToList();
+            return ctx.Classes.Include(c => c.Personagens).ToList();
         }
 
         public Class BuscarPorId(int id)
