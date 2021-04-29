@@ -30,10 +30,16 @@ namespace senai.hroads.webApi.Controllers
         [HttpPost("Cadastrar")]
         public IActionResult Post(Usuario novoUsuario)
         {
+            try
+            {
+                _usuarioRepository.Cadastrar(novoUsuario);
 
-            _usuarioRepository.Cadastrar(novoUsuario);
-
-            return StatusCode(201);
+                return StatusCode(201);
+            }
+            catch (Exception erro)
+            {
+                return BadRequest(erro);
+            }
         }
 
         /// <summary>
@@ -42,7 +48,14 @@ namespace senai.hroads.webApi.Controllers
         [HttpGet("Listar")]
         public IActionResult Get()
         {
-            return Ok(_usuarioRepository.Listar());
+            try
+            {
+                return Ok(_usuarioRepository.Listar());
+            }
+            catch (Exception erro)
+            {
+                return BadRequest(erro);
+            }
         }
 
         /// <summary>
@@ -54,9 +67,23 @@ namespace senai.hroads.webApi.Controllers
         {
             if (_usuarioRepository.BuscarPorId(id) == null)
             {
-                return NotFound("Usuário não encontrado !");
+                return NotFound
+                    (new
+                    {
+                        mensagem = "Usuário não encontrado !",
+                        erro = true
+                    }
+                    );
             }
-            return Ok(_usuarioRepository.BuscarPorId(id));
+
+            try
+            {
+                return Ok(_usuarioRepository.BuscarPorId(id));
+            }
+            catch (Exception erro)
+            {
+                return BadRequest(erro);
+            }
         }
 
         /// <summary>
@@ -97,11 +124,28 @@ namespace senai.hroads.webApi.Controllers
         [HttpDelete("Deletar/{id}")]
         public IActionResult Delete(int id)
         {
+            if (_usuarioRepository.BuscarPorId(id) == null)
+            {
+                return NotFound
+                    (new
+                    {
+                        mensagem = "Usuário não encontrado !",
+                        erro = true
+                    }
+                    );
+            }
 
-            _usuarioRepository.Deletar(id);
+            try
+            {
+                _usuarioRepository.Deletar(id);
 
+                return StatusCode(204);
 
-            return StatusCode(204);
+            }
+            catch (Exception erro)
+            {
+                return BadRequest(erro);
+            }
         }
     }
 }

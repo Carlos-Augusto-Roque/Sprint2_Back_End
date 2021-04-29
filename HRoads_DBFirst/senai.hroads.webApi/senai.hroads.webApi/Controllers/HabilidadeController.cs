@@ -18,7 +18,6 @@ namespace senai.hroads.webApi.Controllers
     {
         private IHabilidadeRepository _habilidadeRepository { get; set; }
 
-
         public HabilidadeController()
         {
             _habilidadeRepository = new HabilidadeRepository();
@@ -31,10 +30,16 @@ namespace senai.hroads.webApi.Controllers
         [HttpPost("Cadastrar")]
         public IActionResult Post(Habilidade novaHabilidade)
         {
+            try
+            {
+                _habilidadeRepository.Cadastrar(novaHabilidade);
 
-            _habilidadeRepository.Cadastrar(novaHabilidade);
-
-            return StatusCode(201);
+                return StatusCode(201);
+            }
+            catch (Exception erro)
+            {
+                return BadRequest(erro);
+            }
         }
 
         /// <summary>
@@ -43,7 +48,14 @@ namespace senai.hroads.webApi.Controllers
         [HttpGet("Listar")]
         public IActionResult Get()
         {
-            return Ok(_habilidadeRepository.Listar());
+            try
+            {
+                return Ok(_habilidadeRepository.Listar());
+            }
+            catch (Exception erro)
+            {
+                return BadRequest(erro);
+            }
         }
 
         /// <summary>
@@ -55,9 +67,23 @@ namespace senai.hroads.webApi.Controllers
         {
             if (_habilidadeRepository.BuscarPorId(id) == null)
             {
-                return NotFound("Habilidade não encontrada !");
+                return NotFound
+                    (new
+                    {
+                        mensagem = "Habilidade não encontrada !",
+                        erro = true
+                    }
+                    );
             }
-            return Ok(_habilidadeRepository.BuscarPorId(id));
+
+            try
+            {
+                return Ok(_habilidadeRepository.BuscarPorId(id));
+            }
+            catch (Exception erro)
+            {
+                return BadRequest(erro);
+            }
         }
 
         /// <summary>
@@ -98,11 +124,27 @@ namespace senai.hroads.webApi.Controllers
         [HttpDelete("Deletar/{id}")]
         public IActionResult Delete(int id)
         {
+            if (_habilidadeRepository.BuscarPorId(id) == null)
+            {
+                return NotFound
+                    (new
+                    {
+                        mensagem = "Habilidade não encontrada !",
+                        erro = true
+                    }
+                    );
+            }
 
-            _habilidadeRepository.Deletar(id);
+            try
+            {
+                _habilidadeRepository.Deletar(id);
 
-
-            return StatusCode(204);
+                return StatusCode(204);
+            }
+            catch (Exception erro)
+            {
+                return BadRequest(erro);
+            }
         }
     }
 }

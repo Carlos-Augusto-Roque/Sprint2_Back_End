@@ -18,7 +18,6 @@ namespace senai.hroads.webApi.Controllers
     {
         private ITiposDeHabilidadeRepository _tiposDeHabilidadeRepository { get; set; }
 
-
         public TiposDeHabilidadeController()
         {
             _tiposDeHabilidadeRepository = new TiposDeHabilidadeRepository();
@@ -31,10 +30,16 @@ namespace senai.hroads.webApi.Controllers
         [HttpPost("Cadastrar")]
         public IActionResult Post(TiposDeHabilidade novoTipo)
         {
+            try
+            {
+                _tiposDeHabilidadeRepository.Cadastrar(novoTipo);
 
-            _tiposDeHabilidadeRepository.Cadastrar(novoTipo);
-
-            return StatusCode(201);
+                return StatusCode(201);
+            }
+            catch (Exception erro)
+            {
+                return BadRequest(erro);               
+            }
         }
 
         /// <summary>
@@ -43,7 +48,14 @@ namespace senai.hroads.webApi.Controllers
         [HttpGet("Listar")]
         public IActionResult Get()
         {
-            return Ok(_tiposDeHabilidadeRepository.Listar());
+            try
+            {
+                return Ok(_tiposDeHabilidadeRepository.Listar());
+            }
+            catch (Exception erro)
+            {
+                return BadRequest(erro);
+            }
         }
 
         /// <summary>
@@ -55,9 +67,23 @@ namespace senai.hroads.webApi.Controllers
         {
             if (_tiposDeHabilidadeRepository.BuscarPorId(id) == null)
             {
-                return NotFound("Tipo de Habilidade não encontrado !");
+                return NotFound
+                    (new
+                    {
+                        mensagem = "Tipo de habilidade não encontrado !",
+                        erro = true
+                    }
+                    );
             }
-            return Ok(_tiposDeHabilidadeRepository.BuscarPorId(id));
+
+            try
+            {
+                return Ok(_tiposDeHabilidadeRepository.BuscarPorId(id));
+            }
+            catch (Exception erro)
+            {
+                return BadRequest(erro);
+            }
         }
 
         /// <summary>
@@ -79,8 +105,7 @@ namespace senai.hroads.webApi.Controllers
             }
 
             try
-            {
-                                
+            {                            
                 _tiposDeHabilidadeRepository.Atualizar(id, tipoAtualizado);
 
                 return StatusCode(204);
@@ -99,11 +124,28 @@ namespace senai.hroads.webApi.Controllers
         [HttpDelete("Deletar/{id}")]
         public IActionResult Delete(int id)
         {
+            if (_tiposDeHabilidadeRepository.BuscarPorId(id) == null)
+            {
+                return NotFound
+                    (new
+                    {
+                        mensagem = "Tipo de habilidade não encontrado !",
+                        erro = true
+                    }
+                    );
+            }
 
-            _tiposDeHabilidadeRepository.Deletar(id);
+            try
+            {
+                _tiposDeHabilidadeRepository.Deletar(id);
 
+                return StatusCode(204);
 
-            return StatusCode(204);
+            }
+            catch (Exception erro)
+            {
+                return BadRequest(erro);
+            }
         }
     }
 }

@@ -30,10 +30,16 @@ namespace senai.hroads.webApi.Controllers
         [HttpPost("Cadastrar")]
         public IActionResult Post(TiposUsuario novotipo)
         {
+            try
+            {
+                _tiposUsuarioRepository.Cadastrar(novotipo);
 
-            _tiposUsuarioRepository.Cadastrar(novotipo);
-
-            return StatusCode(201);
+                return StatusCode(201);
+            }
+            catch (Exception erro)
+            {
+                return BadRequest(erro);
+            }
         }
 
         /// <summary>
@@ -42,7 +48,14 @@ namespace senai.hroads.webApi.Controllers
         [HttpGet("Listar")]
         public IActionResult Get()
         {
-            return Ok(_tiposUsuarioRepository.Listar());
+            try
+            {
+                return Ok(_tiposUsuarioRepository.Listar());
+            }
+            catch (Exception erro)
+            {
+                return BadRequest(erro);
+            }
         }
 
         /// <summary>
@@ -54,10 +67,23 @@ namespace senai.hroads.webApi.Controllers
         {
             if (_tiposUsuarioRepository.BuscarPorId(id) == null)
             {
-                return NotFound("Tipo de Usuário não encontrado !");
+                return NotFound
+                   (new
+                   {
+                       mensagem = "Tipo de usuário não encontrado !",
+                       erro = true
+                   }
+                   );
             }
 
-            return Ok(_tiposUsuarioRepository.BuscarPorId(id));
+            try
+            {
+                return Ok(_tiposUsuarioRepository.BuscarPorId(id));
+            }
+            catch (Exception erro)
+            {
+                return BadRequest(erro);
+            }
         }
 
         /// <summary>
@@ -80,7 +106,6 @@ namespace senai.hroads.webApi.Controllers
 
             try
             {
-                
                 _tiposUsuarioRepository.Atualizar(id, tipoAtualizado);
 
                 return StatusCode(204);
@@ -99,11 +124,27 @@ namespace senai.hroads.webApi.Controllers
         [HttpDelete("Deletar/{id}")]
         public IActionResult Delete(int id)
         {
+            if (_tiposUsuarioRepository.BuscarPorId(id) == null)
+            {
+                return NotFound
+                    (new
+                    {
+                        mensagem = "Tipo de usuário não encontrado !",
+                        erro = true
+                    }
+                    );
+            }
 
-            _tiposUsuarioRepository.Deletar(id);
+            try
+            {
+                _tiposUsuarioRepository.Deletar(id);
 
-
-            return StatusCode(204);
+                return StatusCode(204);
+            }
+            catch (Exception erro)
+            {
+                return BadRequest(erro);
+            }
         }
     }
 }

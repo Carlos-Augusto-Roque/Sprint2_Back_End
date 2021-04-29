@@ -18,7 +18,6 @@ namespace senai.hroads.webApi.Controllers
     {
         private IPersonagenRepository _personagenRepository { get; set; }
 
-
         public PersonagenController()
         {
             _personagenRepository = new PersonagenRepository();
@@ -31,10 +30,17 @@ namespace senai.hroads.webApi.Controllers
         [HttpPost("Cadastrar")]
         public IActionResult Post(Personagen novoPersonagem)
         {
+            try
+            {
+                _personagenRepository.Cadastrar(novoPersonagem);
 
-            _personagenRepository.Cadastrar(novoPersonagem);
+                return StatusCode(201);
+            }
+            catch (Exception erro)
+            {
 
-            return StatusCode(201);
+                return BadRequest(erro);
+            }
         }
 
         /// <summary>
@@ -44,7 +50,15 @@ namespace senai.hroads.webApi.Controllers
         [HttpGet("Listar")]
         public IActionResult Get()
         {
-            return Ok(_personagenRepository.Listar());
+            try
+            {
+                return Ok(_personagenRepository.Listar());
+            }
+            catch (Exception erro)
+            {
+                return BadRequest(erro);
+            }
+
         }
 
         /// <summary>
@@ -56,9 +70,23 @@ namespace senai.hroads.webApi.Controllers
         {
             if (_personagenRepository.BuscarPorId(id) == null)
             {
-                return NotFound("Personagem não encontrado !");
+                return NotFound
+                   (new
+                   {
+                       mensagem = "Personagem não encontrado !",
+                       erro = true
+                   }
+                   );
             }
-            return Ok(_personagenRepository.BuscarPorId(id));
+
+            try
+            {
+                return Ok(_personagenRepository.BuscarPorId(id));
+            }
+            catch (Exception erro)
+            {
+                return BadRequest(erro);
+            }
         }
 
         /// <summary>
@@ -99,11 +127,31 @@ namespace senai.hroads.webApi.Controllers
         [HttpDelete("Deletar/{id}")]
         public IActionResult Delete(int id)
         {
+            if (_personagenRepository.BuscarPorId(id) == null)
+            {
+                return NotFound
+                    (new
+                    {
+                        mensagem = "Personagem não encontrado !",
+                        erro = true
+                    }
+                    );
+            }
 
-            _personagenRepository.Deletar(id);
+            try
+            {
+                _personagenRepository.Deletar(id);
 
 
-            return StatusCode(204);
+                return StatusCode(204);
+
+            }
+            catch (Exception erro)
+            {
+
+                return BadRequest(erro);
+            }
+
         }
     }
 }

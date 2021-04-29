@@ -17,8 +17,7 @@ namespace senai.hroads.webApi.Controllers
     public class ClassController : ControllerBase
     {
         private IClassRepository _classRepository { get; set; }
-
-       
+               
         public ClassController()
         {
             _classRepository = new ClassRepository();
@@ -31,10 +30,16 @@ namespace senai.hroads.webApi.Controllers
         [HttpPost("Cadastrar")]
         public IActionResult Post(Class novaClasse)
         {
-            
-            _classRepository.Cadastrar(novaClasse);
+            try
+            {
+                _classRepository.Cadastrar(novaClasse);
                         
-            return StatusCode(201);
+                return StatusCode(201);
+            }
+            catch (Exception erro)
+            {
+                return BadRequest(erro);
+            }
         }
 
         /// <summary>
@@ -43,7 +48,14 @@ namespace senai.hroads.webApi.Controllers
         [HttpGet("Listar")]
         public IActionResult Get()
         {
-            return Ok(_classRepository.Listar());
+            try
+            {
+                return Ok(_classRepository.Listar());
+            }
+            catch (Exception erro)
+            {
+                return BadRequest(erro);
+            }
         }
 
         /// <summary>
@@ -55,9 +67,23 @@ namespace senai.hroads.webApi.Controllers
         {
             if (_classRepository.BuscarPorId(id) == null)
             {
-                return NotFound("Classe não encontrada !");
+                return NotFound
+                   (new
+                   {
+                       mensagem = "Classe não encontrada !",
+                       erro = true
+                   }
+                   );
             }
-            return Ok(_classRepository.BuscarPorId(id));
+
+            try
+            {
+                return Ok(_classRepository.BuscarPorId(id));
+            }
+            catch (Exception erro)
+            {
+                return BadRequest(erro);
+            }
         }
 
         /// <summary>
@@ -98,11 +124,28 @@ namespace senai.hroads.webApi.Controllers
         [HttpDelete("Deletar/{id}")]
         public IActionResult Delete(int id)
         {
-            
-            _classRepository.Deletar(id);
+            if (_classRepository.BuscarPorId(id) == null)
+            {
+                return NotFound
+                    (new
+                    {
+                        mensagem = "Classe não encontrada !",
+                        erro = true
+                    }
+                    );
+            }
 
-            
-            return StatusCode(204);
+            try
+            {
+                _classRepository.Deletar(id);
+                            
+                return StatusCode(204);
+            }
+            catch (Exception erro)
+            {
+                return BadRequest(erro);
+            }
+
         }
 
     }
