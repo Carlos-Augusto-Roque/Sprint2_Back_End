@@ -29,8 +29,15 @@ BACK-END
 5- FERRAMENTAS -> GERENCIADOR DE PACOTES DO NUGET -> CONSOLE DO GERENCIADOR DE PACOTES
 	-COMPILAR O CÓDIGO ABAIXO NO TERMINAL PARA CRIAR A STRING DE CONEXÃO,O CONTEXT E AUTOMATICAMENTE OS DOMAINS
 
- 	Scaffold-DbContext "Data Source = NOME DO TERMINAL DO BD ; Initial Catalog = NOME DO BD; user Id=sa pwd="SENHA" Microsoft.EntityFrameworkCore.SqlServer
-	-OutputDir Domains -ContextDir Contexts -Context NOMEDOPROJETOContext
+ 	Scaffold-DbContext "Data Source = NOME DO TERMINAL DO BD ; Initial Catalog = NOME DO BD; user Id=sa; pwd=SENHA;" Microsoft.EntityFrameworkCore.SqlServer
+	-OutputDir Domains -ContextDir Contexts -Context NOMEDOPROJETOContext -UseDataBaseNames
+
+5.1- ADICIONAR O COMANDO NA PASTA CSPROJ:
+
+	<PropertyGroup>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<NoWarn>$(NoWarn);1591</NoWarn>
+	</PropertyGroup> 
 
 6- NA PASTA STARTUP CONFIGURAR TODOS AS CONFIGURAÇÕES ABAIXO :
 	
