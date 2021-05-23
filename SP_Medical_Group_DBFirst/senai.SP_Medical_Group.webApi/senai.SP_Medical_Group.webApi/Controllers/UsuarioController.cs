@@ -38,7 +38,7 @@ namespace senai.SP_Medical_Group.webApi.Controllers
         /// </summary>
         /// <param name="novoUsuario">Objeto novoUsuario a ser cadastrado</param>
         /// <returns>Um StatusCode 201 - Created</returns>
-        [Authorize(Roles ="1")]
+        [Authorize(Roles ="1")]        
         [HttpPost]
         public IActionResult Post(Usuario novoUsuario)
         {
