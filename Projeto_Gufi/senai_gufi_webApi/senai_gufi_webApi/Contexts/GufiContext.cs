@@ -16,7 +16,7 @@ using senai_gufi_webApi.Domains;
     Microsoft.EntityFrameworkCore.Tools
 */
 
-// Scaffold-DbContext "Data Source=DESKTOP-SP7RV1S\SQLEXPRESS; initial catalog=Gufi_manha; user Id=sa; pwd=senai@132;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Domains -ContextDir Contexts -Context GufiContext
+// Scaffold-DbContext "Data Source=DESKTOP-REURDRV; initial catalog=Gufi_manha; user Id=sa; pwd=senai@132;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Domains -ContextDir Contexts -Context GufiContext
 
 // Comando:                                 Scaffold-DbContext
 // String de conexão:                       "Data Source=DESKTOP-SP7RV1S\SQLEXPRESS; initial catalog=Gufi_manha; user Id=sa; pwd=senai@132;"
@@ -50,7 +50,7 @@ namespace senai_gufi_webApi.Contexts
             if (!optionsBuilder.IsConfigured)
             {
 //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=DESKTOP-30RGV41\\SQLEXPRESS; initial catalog=Gufi_manha; user Id=sa; pwd=senai@132;");
+                optionsBuilder.UseSqlServer("Data Source=DESKTOP-REURDRV; initial catalog=Gufi; user Id=sa; pwd=1234;");
             }
         }
 
