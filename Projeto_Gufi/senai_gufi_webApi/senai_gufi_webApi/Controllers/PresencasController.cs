@@ -41,6 +41,8 @@ namespace senai_gufi_webApi.Controllers
         /// Lista todos as presenças
         /// </summary>
         /// <returns>Uma lista de presenças e um status code 200 - Ok</returns>
+        // Define que somente o administrador pode acessar o método
+        [Authorize(Roles = "1")]
         [HttpGet]
         public IActionResult Get()
         {
@@ -60,6 +62,8 @@ namespace senai_gufi_webApi.Controllers
         /// </summary>
         /// <param name="id">ID da presença que será buscada</param>
         /// <returns>Uma presença buscada e um status code 200 - Ok</returns>
+        // Define que somente o administrador pode acessar o método
+        [Authorize(Roles = "1")]
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
@@ -79,6 +83,8 @@ namespace senai_gufi_webApi.Controllers
         /// </summary>
         /// <param name="novaPresenca">Objeto novaPresenca que será cadastrada</param>
         /// <returns>Um status code 201 - Created</returns>
+        /// // Define que somente o administrador pode acessar o método
+        [Authorize(Roles = "1")]
         [HttpPost]
         public IActionResult Post(Presenca novaPresenca)
         {
@@ -102,6 +108,8 @@ namespace senai_gufi_webApi.Controllers
         /// <param name="id">ID da presença que será atualizado</param>
         /// <param name="presencaAtualizada">Objeto com as novas informações</param>
         /// <returns>Um status code 204 - No Content</returns>
+        // Define que somente o administrador pode acessar o método
+        [Authorize(Roles = "1")]
         [HttpPut("{id}")]
         public IActionResult Put(int id, Presenca presencaAtualizada)
         {
@@ -124,6 +132,8 @@ namespace senai_gufi_webApi.Controllers
         /// </summary>
         /// <param name="id">ID da presença que será deletada</param>
         /// <returns>Um status code 204 - No Content</returns>
+        // Define que somente o administrador pode acessar o método
+        [Authorize(Roles = "1")]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
@@ -146,6 +156,8 @@ namespace senai_gufi_webApi.Controllers
         /// </summary>
         /// <returns>Uma lista de presenças e um status code 200 - Ok</returns>
         /// dominio/api/presencas/minhas
+        // Define que somente o usuário comum pode acessar o método
+        [Authorize(Roles = "2")]
         [HttpGet("minhas")]
         public IActionResult GetMy()
         {
@@ -174,6 +186,8 @@ namespace senai_gufi_webApi.Controllers
         /// <param name="idEvento">ID do evento que o usuário irá se inscrever</param>
         /// <returns>Um status code 201 - Created</returns>
         /// dominio/api/presencas/inscricao/idEvento
+        /// // Define que somente o usuário comum pode acessar o método
+        [Authorize(Roles = "2")]
         [HttpPost("inscricao/{idEvento}")]
         public IActionResult Join(int idEvento)
         {

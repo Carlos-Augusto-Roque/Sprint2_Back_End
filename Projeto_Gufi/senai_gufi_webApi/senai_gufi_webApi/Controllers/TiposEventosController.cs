@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using senai_gufi_webApi.Domains;
 using senai_gufi_webApi.Interfaces;
 using senai_gufi_webApi.Repositories;
@@ -19,6 +20,9 @@ namespace senai_gufi_webApi.Controllers
 
     // Define que é um controlador de API
     [ApiController]
+
+    // Define que somente o administrador pode acessar os métodos
+    [Authorize(Roles = "1")]
     public class TiposEventosController : ControllerBase
     {
         /// <summary>

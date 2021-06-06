@@ -77,7 +77,10 @@ namespace senai_gufi_webApi.Controllers
                     new Claim(JwtRegisteredClaimNames.Jti, usuarioBuscado.IdUsuario.ToString()),
 
                     // Armazena na Claim o tipo de usuário que foi autenticado (Administrador ou Comum)
-                    new Claim(ClaimTypes.Role, usuarioBuscado.IdTipoUsuario.ToString())
+                    new Claim(ClaimTypes.Role, usuarioBuscado.IdTipoUsuario.ToString()),
+
+                    // Armazena na Claim o tipo de usuário que foi autenticado (Administrador ou Comum) de forma personalizada
+                    new Claim("role", usuarioBuscado.IdTipoUsuario.ToString())
                 };
 
                 // Define a chave de acesso ao token
