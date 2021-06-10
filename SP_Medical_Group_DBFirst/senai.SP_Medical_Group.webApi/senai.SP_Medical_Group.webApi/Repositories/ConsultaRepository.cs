@@ -33,42 +33,7 @@ namespace senai.SP_Medical_Group.webApi.Repositories
 
                 .Include(c => c.IdMedicoNavigation.IdEspecialidadeNavigation)
 
-                .Include(c => c.IdStatusConsultaNavigation)
-
-                .Select(c => new Consulta
-                {
-                    IdConsulta = c.IdConsulta,
-                    DataConsulta = c.DataConsulta,
-                    DescricaoAtendimento = c.DescricaoAtendimento,
-
-                    IdPacienteNavigation = new Paciente
-                    {
-                        IdPaciente = c.IdPacienteNavigation.IdPaciente,
-                        IdUsuario = c.IdPacienteNavigation.IdUsuario,
-                        NomePaciente = c.IdPacienteNavigation.NomePaciente,
-                    },
-
-                    IdMedicoNavigation = new Medico
-                    {
-                        IdMedico = c.IdMedicoNavigation.IdMedico,
-                        IdUsuario = c.IdMedicoNavigation.IdUsuario,
-                        NomeMedico = c.IdMedicoNavigation.NomeMedico,
-                        CRM = c.IdMedicoNavigation.CRM,
-
-                        IdEspecialidadeNavigation = new Especialidade
-                        {
-                            IdEspecialidade = c.IdMedicoNavigation.IdEspecialidadeNavigation.IdEspecialidade,
-                            DescricaoEspecialidade = c.IdMedicoNavigation.IdEspecialidadeNavigation.DescricaoEspecialidade
-                        }
-                    },
-
-                    IdStatusConsultaNavigation = new StatusConsulta
-                    {
-                        IdStatusConsulta = c.IdStatusConsultaNavigation.IdStatusConsulta,
-                        DescricaoStatusConsulta = c.IdStatusConsultaNavigation.DescricaoStatusConsulta
-                    }
-
-                })
+                .Include(c => c.IdStatusConsultaNavigation)               
 
                 .ToList();
         }
