@@ -19,7 +19,9 @@ namespace senai.SP_Medical_Group.webApi.Interfaces
 
         void Deletar(int id);
 
-        List<Consulta> ListarMinhas(int id);               
+        List<Consulta> ListarMinhas(int id);
+
+        List<Consulta> ListarAgenda(int id);
 
         void AtualizarStatus(int id, int idStatus);
 

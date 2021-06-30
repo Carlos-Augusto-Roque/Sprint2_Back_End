@@ -42,7 +42,7 @@ namespace senai_gufi_webApi.Controllers
         /// </summary>
         /// <returns>Uma lista de presenças e um status code 200 - Ok</returns>
         // Define que somente o administrador pode acessar o método
-        [Authorize(Roles = "1")]
+        //[Authorize(Roles = "1")]
         [HttpGet]
         public IActionResult Get()
         {

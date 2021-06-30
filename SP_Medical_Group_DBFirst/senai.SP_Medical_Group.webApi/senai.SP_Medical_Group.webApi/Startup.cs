@@ -30,7 +30,7 @@ namespace senai.SP_Medical_Group.webApi
 
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
 
-                // Ignora valores nulos ao fazer junções nas consultas
+                // Ignora valores nulos ao fazer junï¿½ï¿½es nas consultas
 
                 options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
             });
@@ -39,7 +39,7 @@ namespace senai.SP_Medical_Group.webApi
             services.AddCors(options => {
                 options.AddPolicy("CorsPolicy",
                     builder => {
-                        builder.WithOrigins("http://localhost:3000")
+                        builder.WithOrigins("http://localhost:3000", "http://localhost:19006")
                                                                     .AllowAnyHeader()
                                                                     .AllowAnyMethod();
                     }
@@ -60,7 +60,7 @@ namespace senai.SP_Medical_Group.webApi
             });
 
 
-            //define a forma de autenticação : no caso usaremos o (JwtBearer)
+            //define a forma de autenticaï¿½ï¿½o : no caso usaremos o (JwtBearer)
             services
                     .AddAuthentication(options =>
                     {
@@ -69,30 +69,30 @@ namespace senai.SP_Medical_Group.webApi
                     })
 
 
-                //define os parametros de validação do token
+                //define os parametros de validaï¿½ï¿½o do token
                 .AddJwtBearer("JwtBearer", options =>
                 {
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
-                        //quem está emitindo
+                        //quem estï¿½ emitindo
                         ValidateIssuer = true,
 
-                        //quem está validando
+                        //quem estï¿½ validando
                         ValidateAudience = true,
 
-                        //define que o tempo de expiração será validado
+                        //define que o tempo de expiraï¿½ï¿½o serï¿½ validado
                         ValidateLifetime = true,
 
                         //forma de criptografia
                         IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes("SPMG-chave-autenticacao")),
 
-                        //tempo de expiração do token
+                        //tempo de expiraï¿½ï¿½o do token
                         ClockSkew = TimeSpan.FromMinutes(30),
 
-                        //nome do issuer, de onde está vindo
+                        //nome do issuer, de onde estï¿½ vindo
                         ValidIssuer = "SP_Medical_Group.webApi",
 
-                        //nome do audience, de onde está indo
+                        //nome do audience, de onde estï¿½ indo
                         ValidAudience = "SP_Medical_Group.webApi"
                     };
                 });

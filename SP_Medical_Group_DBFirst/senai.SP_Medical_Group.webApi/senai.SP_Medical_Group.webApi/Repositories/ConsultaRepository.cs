@@ -33,7 +33,43 @@ namespace senai.SP_Medical_Group.webApi.Repositories
 
                 .Include(c => c.IdMedicoNavigation.IdEspecialidadeNavigation)
 
-                .Include(c => c.IdStatusConsultaNavigation)               
+                .Include(c => c.IdStatusConsultaNavigation)
+
+                .Select(c => new Consulta
+                {
+                    IdConsulta = c.IdConsulta,
+                    DataConsulta = c.DataConsulta,
+                    HorarioConsulta = c.HorarioConsulta,
+                    DescricaoAtendimento = c.DescricaoAtendimento,
+
+                    IdPacienteNavigation = new Paciente
+                    {
+                        IdPaciente = c.IdPacienteNavigation.IdPaciente,
+                        IdUsuario = c.IdPacienteNavigation.IdUsuario,
+                        NomePaciente = c.IdPacienteNavigation.NomePaciente,
+                    },
+
+                    IdMedicoNavigation = new Medico
+                    {
+                        IdMedico = c.IdMedicoNavigation.IdMedico,
+                        IdUsuario = c.IdMedicoNavigation.IdUsuario,
+                        NomeMedico = c.IdMedicoNavigation.NomeMedico,
+                        CRM = c.IdMedicoNavigation.CRM,
+
+                        IdEspecialidadeNavigation = new Especialidade
+                        {
+                            IdEspecialidade = c.IdMedicoNavigation.IdEspecialidadeNavigation.IdEspecialidade,
+                            DescricaoEspecialidade = c.IdMedicoNavigation.IdEspecialidadeNavigation.DescricaoEspecialidade
+                        }
+                    },
+
+                    IdStatusConsultaNavigation = new StatusConsulta
+                    {
+                        IdStatusConsulta = c.IdStatusConsultaNavigation.IdStatusConsulta,
+                        DescricaoStatusConsulta = c.IdStatusConsultaNavigation.DescricaoStatusConsulta
+                    }
+
+                })
 
                 .ToList();
         }
@@ -54,6 +90,7 @@ namespace senai.SP_Medical_Group.webApi.Repositories
                 {
                     IdConsulta = c.IdConsulta,
                     DataConsulta = c.DataConsulta,
+                    HorarioConsulta = c.HorarioConsulta,
                     DescricaoAtendimento = c.DescricaoAtendimento,
 
                     IdPacienteNavigation = new Paciente
@@ -159,6 +196,7 @@ namespace senai.SP_Medical_Group.webApi.Repositories
                 {
                     IdConsulta = c.IdConsulta,                    
                     DataConsulta = c.DataConsulta,
+                    HorarioConsulta = c.HorarioConsulta,
                     DescricaoAtendimento = c.DescricaoAtendimento,                    
 
                     IdPacienteNavigation = new Paciente
@@ -191,10 +229,68 @@ namespace senai.SP_Medical_Group.webApi.Repositories
                 })
 
                 .Where(c => c.IdPacienteNavigation.IdUsuario == id || c.IdMedicoNavigation.IdUsuario == id)
+
+                .Where(c => c.IdStatusConsultaNavigation.DescricaoStatusConsulta == "Realizada" || c.IdStatusConsultaNavigation.DescricaoStatusConsulta == "Cancelada")
                                 
                 .ToList();                
         }
-        
+
+        public List<Consulta> ListarAgenda(int id)
+        {
+
+            return ctx.Consultas
+
+                .Include(c => c.IdPacienteNavigation)
+
+                .Include(c => c.IdMedicoNavigation)
+
+                .Include(c => c.IdMedicoNavigation.IdEspecialidadeNavigation)
+
+                .Include(c => c.IdStatusConsultaNavigation)
+
+                .Select(c => new Consulta
+                {
+                    IdConsulta = c.IdConsulta,
+                    DataConsulta = c.DataConsulta,
+                    HorarioConsulta = c.HorarioConsulta,
+                    DescricaoAtendimento = c.DescricaoAtendimento,
+
+                    IdPacienteNavigation = new Paciente
+                    {
+                        IdPaciente = c.IdPacienteNavigation.IdPaciente,
+                        IdUsuario = c.IdPacienteNavigation.IdUsuario,
+                        NomePaciente = c.IdPacienteNavigation.NomePaciente,
+                    },
+
+                    IdMedicoNavigation = new Medico
+                    {
+                        IdMedico = c.IdMedicoNavigation.IdMedico,
+                        IdUsuario = c.IdMedicoNavigation.IdUsuario,
+                        NomeMedico = c.IdMedicoNavigation.NomeMedico,
+                        CRM = c.IdMedicoNavigation.CRM,
+
+                        IdEspecialidadeNavigation = new Especialidade
+                        {
+                            IdEspecialidade = c.IdMedicoNavigation.IdEspecialidadeNavigation.IdEspecialidade,
+                            DescricaoEspecialidade = c.IdMedicoNavigation.IdEspecialidadeNavigation.DescricaoEspecialidade
+                        }
+                    },
+
+                    IdStatusConsultaNavigation = new StatusConsulta
+                    {
+                        IdStatusConsulta = c.IdStatusConsultaNavigation.IdStatusConsulta,
+                        DescricaoStatusConsulta = c.IdStatusConsultaNavigation.DescricaoStatusConsulta
+                    }
+
+                })
+
+                .Where(c => c.IdPacienteNavigation.IdUsuario == id || c.IdMedicoNavigation.IdUsuario == id)
+
+                .Where(c => c.IdStatusConsultaNavigation.DescricaoStatusConsulta == "Agendada")
+
+                .ToList();
+        }
+
         public void AtualizarStatus(int idConsulta, int idStatus)
         {
             Consulta consultaBuscada = ctx.Consultas.Find(idConsulta);

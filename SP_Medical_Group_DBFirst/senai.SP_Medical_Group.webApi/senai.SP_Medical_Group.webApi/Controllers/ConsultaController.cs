@@ -183,7 +183,29 @@ namespace senai.SP_Medical_Group.webApi.Controllers
                     erro
                 });
             }
-        }        
+        }
+        
+        [Authorize(Roles = "2,3")]
+        [HttpGet("Agenda")]
+        public IActionResult GetAgend ()
+        {
+            try
+            {
+                int idUsuario = Convert.ToInt32(HttpContext.User.Claims.First(c => c.Type == JwtRegisteredClaimNames.Jti).Value);
+
+                return Ok(_consultaRepository.ListarAgenda(idUsuario));
+
+
+            }
+            catch (Exception erro)
+            {
+                return BadRequest(new
+                {
+                    mensagem = "Não é possível mostrar a agenda se o usuário não estiver logado!",
+                    erro
+                });
+            }
+        }
 
         /// <summary>
         /// Atualiza o Status de uma consulta

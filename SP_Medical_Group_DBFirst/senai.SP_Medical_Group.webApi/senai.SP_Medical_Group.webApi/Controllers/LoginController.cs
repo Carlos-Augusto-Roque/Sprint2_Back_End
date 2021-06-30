@@ -63,8 +63,11 @@ namespace senai.SP_Medical_Group.webApi.Controllers
 
                     
                     new Claim(ClaimTypes.Role, usuarioBuscado.IdTipoUsuario.ToString()),
+
                    
-                    new Claim("role", usuarioBuscado.IdTipoUsuario.ToString())
+                    new Claim("role", usuarioBuscado.IdTipoUsuario.ToString())                   
+
+                    
                 };
 
                 

@@ -22,7 +22,7 @@ namespace senai_gufi_webApi.Controllers
     [ApiController]
 
     // Define que qualquer usuário autenticado pode acessar aos métodos
-    [Authorize]
+    //[Authorize]
     public class EventosController : ControllerBase
     {
         /// <summary>
