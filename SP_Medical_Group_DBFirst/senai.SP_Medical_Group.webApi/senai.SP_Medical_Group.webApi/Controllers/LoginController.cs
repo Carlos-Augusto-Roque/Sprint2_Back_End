@@ -48,6 +48,21 @@ namespace senai.SP_Medical_Group.webApi.Controllers
             {
                 Usuario usuarioBuscado = _usuarioRepository.Login(login.Email, login.Senha);
 
+                Paciente pacienteLogin = new Paciente();
+
+                Medico medicoLogin = new Medico();
+
+
+                if (usuarioBuscado.IdTipoUsuario == 2)
+                {
+                    pacienteLogin = _usuarioRepository.BuscarPacientePorId(usuarioBuscado.IdUsuario);
+                }
+
+                if (usuarioBuscado.IdTipoUsuario == 3)
+                {
+                    medicoLogin = _usuarioRepository.BuscarMedicoPorId(usuarioBuscado.IdUsuario);
+                }
+
                 if (usuarioBuscado == null)
                 {
                     return NotFound("Email ou senha inválidos !");
@@ -57,15 +72,16 @@ namespace senai.SP_Medical_Group.webApi.Controllers
                {
                     
                     new Claim(JwtRegisteredClaimNames.Email, usuarioBuscado.Email),
-
                     
                     new Claim(JwtRegisteredClaimNames.Jti, usuarioBuscado.IdUsuario.ToString()),
-
                     
                     new Claim(ClaimTypes.Role, usuarioBuscado.IdTipoUsuario.ToString()),
-
                    
-                    new Claim("role", usuarioBuscado.IdTipoUsuario.ToString())                   
+                    new Claim("role", usuarioBuscado.IdTipoUsuario.ToString()),
+
+                    new Claim("nomePaciente", usuarioBuscado.IdTipoUsuario == 2 ? $"{pacienteLogin.NomePaciente}" : "" ),
+
+                    new Claim("nomeMedico", usuarioBuscado.IdTipoUsuario == 3 ? $"{medicoLogin.NomeMedico}" : "" )                 
 
                     
                 };

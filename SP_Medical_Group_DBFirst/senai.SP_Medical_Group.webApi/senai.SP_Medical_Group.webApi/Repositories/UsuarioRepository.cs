@@ -96,5 +96,16 @@ namespace senai.SP_Medical_Group.webApi.Repositories
         {
             return ctx.Usuarios.FirstOrDefault(u => u.Email == email && u.Senha == senha);
         }
+
+        public Medico BuscarMedicoPorId(int id)
+        {
+            return ctx.Medicos.FirstOrDefault(u => u.IdUsuario == id);
+        }
+
+        public Paciente BuscarPacientePorId(int id)
+        {
+            return ctx.Pacientes.FirstOrDefault(u => u.IdUsuario == id);
+        }
+
     }
 }

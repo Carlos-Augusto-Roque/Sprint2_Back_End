@@ -19,5 +19,9 @@ namespace senai.SP_Medical_Group.webApi.Interfaces
         void Atualizar(int id, Usuario usuarioAtualizado);
 
         void Deletar(int id);
+
+        Paciente BuscarPacientePorId(int id);
+
+        Medico BuscarMedicoPorId(int id);
     }
 }
